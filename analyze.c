@@ -50,9 +50,9 @@
 */
 
 #include "numdiff.h"
-#include "cmpbuf.h"
-#include "error.h"
-#include "xalloc.h"
+#include <cmpbuf.h>
+#include <error.h>
+#include <xalloc.h>
 
 static lin *xvec, *yvec;	/* Vectors being compared. */
 static lin *fdiag;		/* Vector, indexed by diagonal, containing
@@ -776,7 +776,7 @@ build_script (struct file_data const filevec[])
 
 /* Report the differences of two files.  */
 int
-diff_2_files (struct file_data filevec[], argslist* argl)
+diff_2_files (struct file_data filevec[], const argslist* argl)
 {
   lin diags;
   int f;
@@ -817,8 +817,7 @@ diff_2_files (struct file_data filevec[], argslist* argl)
       /* Some lines are obviously insertions or deletions
 	 because they don't match anything.  Detect them now, and
 	 avoid even thinking about them in the main comparison algorithm.  */
-
-      discard_confusing_lines (filevec, (argl->optmask & _M_MASK));
+      discard_confusing_lines (filevec, (getBitAtPosition (&argl->optmask, _M_MASK) == BIT_ON));
 
       /* Now do the main comparison algorithm, considering just the
 	 undiscarded lines.  */
@@ -840,7 +839,8 @@ diff_2_files (struct file_data filevec[], argslist* argl)
       too_expensive = MAX (256, too_expensive);
 
       compareseq (0, filevec[0].nondiscarded_lines,
-		  0, filevec[1].nondiscarded_lines, (argl->optmask & _M_MASK));
+		  0, filevec[1].nondiscarded_lines,
+		  (getBitAtPosition (&argl->optmask, _M_MASK) == BIT_ON));
 
       free (fdiag - (filevec[1].nondiscarded_lines + 1));
 
@@ -857,7 +857,8 @@ diff_2_files (struct file_data filevec[], argslist* argl)
       /* Set CHANGES if we had any diffs. */
       changes = (script != 0) ? 1 : 0;
 
-      if ( argl->optmask & _F_MASK && argl->output_mode > OUTMODE_QUIET )
+      if ( getBitAtPosition (&argl->optmask, _F_MASK) == BIT_ON &&
+	   argl->output_mode > OUTMODE_QUIET )
 	{
 	  if (changes | !suppress_common_lines)
 	      print_sdiff_script (script);

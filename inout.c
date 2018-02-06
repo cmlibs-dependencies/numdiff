@@ -38,9 +38,9 @@
 
 #include "numdiff.h"
 #include "linesplit.h"
-#include "cmpbuf.h"
-#include "setmode.h"
-#include "xalloc.h"
+#include <cmpbuf.h>
+#include <setmode.h>
+#include <xalloc.h>
 
 /* Lines are put into equivalence classes of lines that match in lines_differ.
    Each equivalence class is represented by one of these structures,
@@ -222,7 +222,8 @@ slurp (struct file_data *current)
    class for each line.  */
 
 static void
-find_and_hash_each_line (struct file_data *current, const char** ifs, int index, argslist *argl)
+find_and_hash_each_line (struct file_data *current, const char** ifs, int index,
+			 const argslist *argl)
 {
   hash_value h;
   unsigned char const *p = (unsigned char const *) current->prefix_end;
@@ -231,11 +232,11 @@ find_and_hash_each_line (struct file_data *current, const char** ifs, int index,
   size_t length;
 
   /* Cache often-used quantities in local variables to help the compiler.  */
-  int ignore_case = argl->optmask & _SI_MASK;
+  int ignore_case = (getBitAtPosition (&argl->optmask, _SI_MASK) == BIT_ON);
   const struct numfmt* pnf = (index) ? &argl->nf2 : &argl->nf1; 
-  unsigned char* ghostmask = (index) ? argl->ghostmask2 : argl->ghostmask1;
-  unsigned char* pblurmask = (index) ? argl->pblurmask2 : argl->pblurmask1;
-  unsigned char* tblurmask = (index) ? argl->tblurmask2 : argl->tblurmask1;
+  const unsigned char* ghostmask = (index) ? argl->ghostmask2 : argl->ghostmask1;
+  const unsigned char* pblurmask = (index) ? argl->pblurmask2 : argl->pblurmask1;
+  const unsigned char* tblurmask = (index) ? argl->tblurmask2 : argl->tblurmask1;
   char const **linbuf = current->linbuf;
   lin alloc_lines = current->alloc_lines;
   lin line = 0;
@@ -756,14 +757,14 @@ extern char** def_ifs;
    Return nonzero if either file appears to be a binary file. */
 
 bool
-read_files (struct file_data filevec[], argslist* argl)
+read_files (struct file_data filevec[], const argslist* argl)
 {
   int i;
   bool appears_binary = sip (&filevec[0], 0);
-  char **ifs1, **ifs2;
+  const char **ifs1, **ifs2;
 
-  ifs1 = (!argl->ifs1) ? def_ifs : argl->ifs1;
-  ifs2 = (!argl->ifs2) ? def_ifs : argl->ifs2;
+  ifs1 = (!argl->ifs1) ? (const char**)def_ifs : (const char**)argl->ifs1;
+  ifs2 = (!argl->ifs2) ? (const char**)def_ifs : (const char**)argl->ifs2;
   if (filevec[0].desc != filevec[1].desc)
     appears_binary |= sip (&filevec[1], appears_binary); /*# skip test if appears_binary is already !0 #*/
 /*   else */
@@ -796,8 +797,8 @@ read_files (struct file_data filevec[], argslist* argl)
   buckets = zalloc ((nbuckets + 1) * sizeof *buckets);
   buckets++;
 
-  find_and_hash_each_line (&filevec[0], (const char**) ifs1, 0, argl);
-  find_and_hash_each_line (&filevec[1], (const char**) ifs2, 1, argl);
+  find_and_hash_each_line (&filevec[0], ifs1, 0, argl);
+  find_and_hash_each_line (&filevec[1], ifs2, 1, argl);
 
   filevec[0].equiv_max = filevec[1].equiv_max = equivs_index;
 

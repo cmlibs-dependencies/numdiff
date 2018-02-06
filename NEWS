@@ -1,3 +1,19 @@
+5.8.1 --> 5.9.0 (Ivano Primi <ivprimi(at)libero(dot)it>) :
+
+*   New option --raw for printing the differences between the compared
+    files in raw format (the raw format is not convenient for humans
+    but is very compact and can be easily parsed by other programs).
+
+*   The output of the option -S includes now the positions of
+    the first occurrences in the compared files of the largest
+    absolute/relative error.
+
+*   Thanks to Elias Pipping, the issue with long execution times and overloading
+    of the processor in case Numdiff had been built against GNU MP with
+    optimization enabled is now solved.
+
+*   Documentation updated and corrected where needed.
+
 5.8.0 --> 5.8.1 (Ivano Primi <ivprimi(at)libero(dot)it>) :
 
 *   The distribution terms of the documentation have been slightly changed

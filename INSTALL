@@ -1,4 +1,4 @@
-   Copyright (C)  2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  Ivano Primi  <ivprimi@libero.it>    
+   Copyright (C)  2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Ivano Primi  <ivprimi@libero.it>    
 
    Copying and distribution of this file, with or without modification,
    are permitted in any medium without royalty provided the copyright
@@ -19,6 +19,14 @@ and the options `-I' and `-L'
 to add a given directory to the search path for include and
 library files respectively.
 
+In addition, you need a POSIX implementation of the `make' utility
+(I used both GNU make and smake by Joerg Schilling 
+to compile Numdiff) and a POSIX implementation
+of the commands `rm' and `find'.
+At last, you need a proper installation of GNU Texinfo 
+(in order to install the info documentation) and
+a shell sh-compatible.
+
 Numdiff has been successfully compiled and tested on:
 
  - Slackware(R) GNU/Linux 10.2 with the version 3.3.6 of the GNU C Compiler (GCC),
@@ -28,16 +36,9 @@ Numdiff has been successfully compiled and tested on:
  - Debian(R) GNU/Linux 4.0 with GCC 4.1.2 20061115 (prerelease) (Debian 4.1.1-21),
  - Debian GNU/Linux 6.0.3 with GCC 4.4.5 (Debian 4.4.5-8),
  - Debian GNU/Linux 7.1 with GCC 4.7.2 (Debian 4.7.2-5),
+ - Debian GNU/Linux 8.6 with GCC 4.9.2 (Debian 4.9.2-10), 
  - SunOS(R) 5.8 with GCC 2.95.3, and 
  - SunOS 5.10 (i386) with the version 5.9 of the Sun C compiler.
-
-Moreover, you need a POSIX implementation of the `make' utility
-(I used both GNU make and smake by Joerg Schilling 
-to compile Numdiff) and a POSIX implementation
-of the commands `rm' and `find'.
-At last, you need a proper installation of GNU Texinfo 
-(in order to install the info documentation) and
-a shell sh-compatible.
 
 Configuration, building and installation of Numdiff can be
 performed through the standard three steps:
@@ -48,8 +49,8 @@ performed through the standard three steps:
 
 If you leave enabled the Natural Language Support and you
 also want to install the localization files (at the moment
-only the Italian localization is supplied), then, after
-`make', you will have to type and run
+only the Italian localization is supplied), then after
+`make' you will have to type and run
 
         make install-nls
 
@@ -64,10 +65,10 @@ for instance `--prefix=$HOME':
 For better control, you can use the options
 `--bindir', `--infodir', and so on. 
 Type `./configure --help' to obtain
-the complete list of all the available options.
+the complete list of all available options.
 
-Anyway, the documentation files, including a full User Manual
-available in several formats (HTML, PDF and plain ASCII text),
+The documentation files (including a full User Manual
+available in HTML, PDF and plain ASCII text format)
 will always be put in `DOCDIR/numdiff',
 where `DOCDIR' is the path specified by the option `--docdir'
 or, if this option has not been given to
@@ -75,12 +76,11 @@ or, if this option has not been given to
 installation prefix specified by the
 option `--prefix' or the default `/usr/local'.
 
-Once Numdiff has been installed you can remove all the
-files previously installed by a simple `make uninstall'.
+Once Numdiff has been installed you can remove all
+files related to Numdiff by a simple `make uninstall'.
 If you have also installed the localization files trough
-`make install-nls', then, in order to remove also 
-these ones, use `make uninstall-nls' in place
-of `make uninstall'.
+`make install-nls', use `make uninstall-nls' in place
+of `make uninstall' to remove them too.
 
 Between the options accepted by `configure'
 there are `--enable-debug', `--enable-optimization',
@@ -101,13 +101,12 @@ by setting the environment variable `OPTFLAGS' before
 calling `configure'.
 
 The option `--enable-nls' turns on Natural Language Support.
-But you do not need to use it explicitly, since Natural
-Language Support is enabled by default.
-However, you can disable it by using `--disable-nls'.
+You do not need to use it explicitly since Natural
+Language Support is enabled by default. To disable it, use `--disable-nls'.
 Disabling Natural Language Support is suggested whenever
 you want to install Numdiff on a system where the GNU gettext library
 is not present. In this case the installation of Numdiff 
-can be accomplished, for instance, through
+can be accomplished, for example, through
 
         ./configure --disable-nls
         make
@@ -119,7 +118,7 @@ the GNU Multiple Precision Arithmetic Library
 at build-time.
 The old internal support for multiple precision arithmetic
 is a fall-back in case GNU MP is absent.
-However it is possible to use the internal support for 
+However, it is possible to use the internal support for 
 multiple precision arithmetic even when GNU MP is available:
 it is sufficient to pass the option `--enable-gmp=no'
 or `--disable-gmp' to the  configure  script
@@ -132,7 +131,7 @@ before building the program, like in
 Enabling the old internal support for multiple precision arithmetic
 is deprecated, I suggest to always link Numdiff against GNU MP.
 The latest version of GNU MP is available at
-ftp://ftp.gnu.org/gnu/gmp/. See the GNU MP web page
+http://ftp.gnu.org/gnu/gmp/. See the GNU MP web page
 at  http://gmplib.org/  for up-to-date information on GNU MP.
 
 Below, I have attached the generic INSTALL instructions included in the

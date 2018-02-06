@@ -6,12 +6,13 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ndselect 5.8.1\n"
+"Project-Id-Version: ndselect 5.9.0\n"
 "Report-Msgid-Bugs-To: ivprimi@libero.it\n"
-"POT-Creation-Date: 2013-08-07 15:35+0200\n"
-"PO-Revision-Date: 2013-09-15 17:42+0200\n"
+"POT-Creation-Date: 2017-02-12 22:11+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -216,7 +217,7 @@ msgstr ""
 msgid "%s: invalid argument after `-%c' option\n"
 msgstr ""
 
-#: ndselect.c:371 ndselect.c:397 ndselect.c:423 ndselect.c:488
+#: ndselect.c:371 ndselect.c:397 ndselect.c:423 ndselect.c:494
 #, c-format
 msgid "%s: memory exhausted\n"
 msgstr ""
@@ -240,17 +241,17 @@ msgid ""
 "  must always include the newline string (\"\\n\")\n"
 msgstr ""
 
-#: ndselect.c:435 ndselect.c:444 ndselect.c:515
+#: ndselect.c:435 ndselect.c:445 ndselect.c:520
 #, c-format
 msgid "%s: cannot open file \"%s\":\n"
 msgstr ""
 
-#: ndselect.c:519
+#: ndselect.c:524
 #, c-format
 msgid "%s: cannot close file \"%s\":\n"
 msgstr ""
 
-#: ndselect.c:523
+#: ndselect.c:528
 #, c-format
 msgid ""
 "%s: Error occurred while reading from file \"%s\"\n"

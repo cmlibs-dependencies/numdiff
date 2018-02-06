@@ -1,7 +1,7 @@
 /*
     Numdiff - compare putatively similar files, 
     ignoring small numeric differences
-    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  Ivano Primi  <ivprimi@libero.it>
+    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Ivano Primi  <ivprimi@libero.it>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #define _NUMDIFF_H_
 
 #include "system.h"
+#include "bitvector.h"
 
 #if defined(HAVE_LIBGMP) && !defined(DISABLE_GMP)
 #define USE_GMP 1
@@ -146,8 +147,18 @@ typedef struct {
 		retrieved from the execution of a diff command */
 
 typedef struct {
+  unsigned long lineno1;
+  unsigned long lineno2;
+  unsigned long fieldno1;
+  unsigned long fieldno2;  
+} difference_location; /* A structure of this type is used
+  to store the "location" of a difference between the compared files:
+  (LINENO1,FIELDNO1) and (LINENO2, FIELDNO2) are the positions
+  of the fields which differ */
+
+typedef struct {
   /* Mask of the options */
-  unsigned long optmask;
+  bitvector optmask;
 
   /* Output mode. This field can take any of the values */
   /* OUTMODE_* (see below)                              */
@@ -192,10 +203,6 @@ typedef struct {
   /* Tolerance thresholds for absolute and relative errors */
   thrlist maxabserr, maxrelerr;
 
-  /* These variables are used to print statistics */
-  Real Labserr,  Crelerr,  Lrelerr,  Cabserr, N1abserr, N1disperr, N2abserr, N2disperr;
-  int Nentries, Ndisperr;
-
   /* Flag > 0 --> If a numeric field in the first file is greater than the  */
   /*              corresponding numeric field in the second file, then the  */
   /*              related difference is ignored, i.e. it is never output    */
@@ -224,74 +231,90 @@ typedef struct {
 } argslist ; /* A structure of this type is used to store the options */
 /* set by the user                                                    */ 
 
-#define _H_MASK   0x00000001 /* -h option, used to recall help */
-#define _A_MASK   0x00000002 /* -a option, used to set tolerance for abs. error  */
-#define _R_MASK   0x00000004 /* -r option, used to set tolerance for rel. error  */
-#define _2_MASK   0x00000008 /* -2 option, used to enable the "strict" control */
-#define _S_MASK   0x00000010 /* -s option, used to explicitly set IFS  */
-#define _B_MASK   0x00000020 /* -b option, used to enable the "brief" mode */
-#define _F_MASK   0x00000040 /* -f option, used to enable the "filter-only" mode */
-#define _Q_MASK   0x00000080 /* -q option, used to enable "quiet" mode */
-#define _X_MASK   0x00000100 /* -# option, used to set the precision   */
-#define _D_MASK   0x00000200 /* -d option, used to set the decimal point */
-#define _T_MASK   0x00000400 /* -t option, used to set the thousands separator */
-#define _G_MASK   0x00000800 /* -g option, used to set the 'grouping' */
-#define _P_MASK   0x00001000 /* -p option, used to set the character 
-		  	    	'positive sign' */
-#define _N_MASK   0x00002000 /* -n option, used to set the character 
-		  	    	'negative sign' */
-#define _E_MASK   0x00004000 /* -e option, used to set prefix for 
-		  	    	decimal exponent */
-#define _I_MASK   0x00008000 /* -i option, used to set the symbol
-		  	    	of the imaginary unit */
-#define _L_MASK   0x00010000 /* -l option, used to redirect the standard
-		  	    	error on a file */
-#define _O_MASK   0x00020000 /* -o option, used to redirect the standard
-		  	    	output on a file */
-#define _Z_MASK   0x00040000 /* -z option, used to activate the filter 
-			        (normal mode)    */
-#define _SZ_MASK  0x00080000 /* -Z option, used to activate the filter 
-                                (alternative mode) */
-#define _SX_MASK  0x00100000 /* -X option, used to select which fields in the
-		  	    	lines of the files must be ignored */
-#define _SP_MASK  0x00200000 /* -P option, used to ignore negative errors */
-#define _SN_MASK  0x00400000 /* -N option, used to ignore positive errors */
-#define _SU_MASK  0x00800000 /* -U option, used to enable the "dummy" mode */
-#define _SE_MASK  0x01000000 /* -E option, used to enable the "essential" 
-				mode */
-#define _SV_MASK  0x02000000 /* -V option, used to enable the "verbose" mode */
-#define _SO_MASK  0x04000000 /* -O option, used to enable the "overview" mode */
-#define _SS_MASK  0x08000000 /* -S option, used to print statistics */
-#define _SI_MASK  0x10000000 /* -I option, used to ignore case while comparing
-			        non numerical fields */
-#define _SH_MASK  0x20000000 /* -H option, by filtering assume large files and
-				many scattered small changes */
-#define _M_MASK   0x40000000 /* -m option, by filtering try hard to find a smaller 
-				set of changes */
-#define _V_MASK   0x80000000 /* -v option, used to show version number,
-			        Copyright and No-Warrany */
-/* Remark: Intentionally there are no masks for the options -c and -F */
+typedef struct {
+  /* These variables are used to print statistics */
+  Real Labserr,  Crelerr,  Lrelerr,  Cabserr;
+  Real N1abserr, N1disperr, N2abserr, N2disperr;
 
-/* Output modes: verbose, normal, brief, and quiet.       */
-/* Do not change the relative order of the values of      */
-/* these macros, the code in cmp_lines()  (see file       */
-/* cmpfns.c) relies on the fact that:                     */
-/* OUTMODE_VERBOSE > OUTMODE_NORMAL > OUTMODE_COINCISE    */
-/* > OUTMODE_BRIEF > OUTMODE_QUIET  > OUTMODE_OVERVIEW    */
+  difference_location Labserr_location, Rabserr_location;
 
-#define OUTMODE_VERBOSE     4
-#define OUTMODE_NORMAL      3
-#define OUTMODE_COINCISE    2
-#define OUTMODE_BRIEF       1
-#define OUTMODE_QUIET       0
-#define OUTMODE_OVERVIEW   -1
+  int Nentries, Ndisperr;
+} statlist; 
 
+enum {
+  _H_MASK=0,  /* -h option, used to recall help */
+  _A_MASK=1,  /* -a option, used to set tolerance for abs. error  */
+  _R_MASK=2,  /* -r option, used to set tolerance for rel. error  */
+  _2_MASK=3,  /* -2 option, used to enable the "strict" control */
+  _S_MASK=4,  /* -s option, used to explicitly set IFS  */
+  _B_MASK=5,  /* -b option, used to enable the "brief" mode */
+  _F_MASK=6,  /* -f option, used to enable the "filter-only" mode */
+  _Q_MASK=7,  /* -q option, used to enable "quiet" mode */
+  _X_MASK=8,  /* -# option, used to set the precision   */
+  _D_MASK=9,  /* -d option, used to set the decimal point */
+  _T_MASK=10, /* -t option, used to set the thousands separator */
+  _G_MASK=11, /* -g option, used to set the group length */
+  _P_MASK=12, /* -p option, used to set the character 'positive sign' */
+  _N_MASK=13, /* -n option, used to set the character 'negative sign' */
+  _E_MASK=14, /* -e option, used to set prefix for decimal exponent */
+  _I_MASK=15, /* -i option, used to set the symbol of the imaginary unit */
+  _L_MASK=16, /* -l option, to redirect the standard error on a file */
+  _O_MASK=17, /* -o option, to redirect the standard output on a file */
+  _Z_MASK=18, /* -z option, to activate the filter (normal mode) */
+  _SZ_MASK=19,/* -Z option, to activate the filter (alternative mode) */
+  _SX_MASK=20,/* -X option, used to select which fields in the
+		 lines of the files must be ignored */
+  _SP_MASK=21,/* -P option, used to ignore negative errors */
+  _SN_MASK=22,/* -N option, used to ignore positive errors */
+  _SU_MASK=23,/* -U option, used to enable the "dummy" mode */
+  _SE_MASK=24,/* -E option, used to enable the "essential" mode */
+  _SV_MASK=25,/* -V option, used to enable the "verbose" mode */
+  _SO_MASK=26,/* -O option, used to enable the "overview" mode */
+  _SS_MASK=27,/* -S option, used to print statistics */
+  _SI_MASK=28,/* -I option, used to ignore case while comparing 
+		 non numerical field */
+  _SH_MASK=29,/* -H option, by filtering assume large files and
+		 many scattered small changes */
+  _M_MASK=30, /* -m option, by filtering try hard to find a smaller 
+		 set of changes */
+  _ST_MASK=31,/* -T option, to expand tabs in spaces */
+  _SB_MASK=32,/* -B option, to treat both files as binary files */
+  _SD_MASK=33,/* -D option, used to set the field delimiters */
+  _SF_MASK=34,/* -F option, used to set the formula for computing
+		 the relative errors */
+  _C_MASK=35, /* -c option, used to set the currency name(symbol) */
+  _RAW_MASK=36, /* --raw option, to print the differences in raw format */
+  _V_MASK=37, /* -v option, used to show version number,
+		 Copyright and No-Warrany */
+  MAX_NUMDIFF_OPTIONS = 100
+};
+
+/* Output modes: verbose, normal, brief, and quiet.     */
+/* Do not change the relative order of the values of    */
+/* these macros, the code in cmp_lines()  (see file     */
+/* cmpfns.c) relies on the fact that:                   */
+/* OUTMODE_VERBOSE > OUTMODE_NORMAL > OUTMODE_COINCISE  */
+/* > OUTMODE_BRIEF > OUTMODE_QUIET  > OUTMODE_OVERVIEW, */
+/* and OUTMODE_OVERVIEW > OUTMODE_RAW.                  */
+
+enum {
+  OUTMODE_VERBOSE=    4,
+  OUTMODE_NORMAL=     3,
+  OUTMODE_COINCISE=   2,
+  OUTMODE_BRIEF=      1,
+  OUTMODE_QUIET=      0,
+  OUTMODE_OVERVIEW=  -1,
+  OUTMODE_RAW=       -2
+};
+  
 /* Methods to compute the relative differences */
 
-#define CLASSIC_FORMULA         0
-#define WR_TO_FIRST_FILE        1
-#define WR_TO_SECOND_FILE       2
-
+enum {
+  CLASSIC_FORMULA=        0,
+  WR_TO_FIRST_FILE=       1,
+  WR_TO_SECOND_FILE=      2
+};
+  
 #ifndef PACKAGE
 #define PACKAGE "numdiff"
 #endif
@@ -622,10 +645,10 @@ XTERN struct file_data files[2];
 /* Declare various functions.  */
 
 /* analyze.c */
-int diff_2_files (struct file_data[], argslist*);
+int diff_2_files (struct file_data[], const argslist*);
 
 /* inout.c */
-bool read_files (struct file_data[], argslist*);
+bool read_files (struct file_data[], const argslist*);
 
 /* numutil.c */
 char* acxnum (const char *str, const struct numfmt* pnf);
@@ -641,7 +664,7 @@ void print_sdiff_script (struct change *);
 void print_1overview_line (const char *left, int are_different, const char *right);
 
 /* util.c */
-bool lines_differ (char const *, char const *, int, int, argslist*);
+bool lines_differ (char const *, char const *, int, int, const argslist*);
 void *zalloc (size_t);
 
 #define stralloc(length) zalloc ((length)+1)

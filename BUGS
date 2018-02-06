@@ -12,14 +12,11 @@ support for older versions.
 
 -------------------------------------------------------------------------------
 
-Known issues 
+Known issues
 ============
 
-If you use gcc 4.7.2 or clang 3.3 to compile and build Numdiff (but other
-versions of these compilers could also be affected by this issue), do not run 
-"configure" with "--enable-optimization" and do not set the environment 
-variable CFLAGS to -O, -O1, -O2, etc., unless you also use "--disable-gmp". 
-If you enable the optimized build of the code while keeping GMP-based 
-multiple precision arithmetic active, then the executable of Numdiff you get
-will not run properly (long execution time with overloading of the processor).
-
+Numdiff cannot be successfully installed if the target directory chosen
+for the installation is a directory whose path includes one or more spaces.
+This is not an issue of Numdiff but of GNU shtool, which is used to
+perform the installation in a portable way.
+Thanks to Tim Jenness for having reported this problem.

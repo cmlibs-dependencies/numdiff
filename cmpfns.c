@@ -1,7 +1,7 @@
 /*
     Numdiff - compare putatively similar files, 
     ignoring small numeric differences
-    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  Ivano Primi  <ivprimi@libero.it>
+    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Ivano Primi  <ivprimi@libero.it>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ extern void print_fields (const char* field1, const char* field2,
 			  size_t l1, size_t l2, 
 			  unsigned long lineno1, unsigned long lineno2, 
 			  unsigned long fieldno1, unsigned long fieldno2);
-extern void print_errors (Real abserr, Real relerr);
+extern void print_errors (Real abserr, Real relerr, int human_readable_format);
 extern void print_separator (void);
 
 static
@@ -73,8 +73,9 @@ static int strNcasecmp (const char* s, const char* t, size_t n)
 static
 int cmp_fields (const char* field1, const char* field2,
 		unsigned long fieldno1, unsigned long fieldno2, 
-		size_t l1, size_t l2, argslist* argl,
-		Real* abserr, Real* relerr)
+		size_t l1, size_t l2, const argslist* argl,
+		statlist* statres, Real* abserr, Real* relerr,
+		int* Labserr_exceeded, int* Rabserr_exceeded)
 {
   char *tail1, *tail2;
   Complex z1, z2;
@@ -157,7 +158,7 @@ int cmp_fields (const char* field1, const char* field2,
 	  delC (&z2);
 	  delC (&z1);
 
-	  if (!(argl->optmask & _2_MASK))
+	  if (getBitAtPosition (&argl->optmask, _2_MASK) == BIT_OFF)
 	    exit_code = 
 	      thrlist_cmp (*relerr, argl->maxrelerr, fieldno1, fieldno2) > 0 && 
 	      thrlist_cmp (*abserr, argl->maxabserr, fieldno1, fieldno2) > 0 ? 2:0;
@@ -165,44 +166,52 @@ int cmp_fields (const char* field1, const char* field2,
 	    exit_code =
 	      thrlist_cmp (*relerr, argl->maxrelerr, fieldno1, fieldno2) > 0 || 
 	      thrlist_cmp (*abserr, argl->maxabserr, fieldno1, fieldno2) > 0 ? 2:0;
-	  if ((argl->optmask & _SS_MASK))
+	  if (getBitAtPosition (&argl->optmask, _SS_MASK) == BIT_ON)
 	    {
-	      argl->Nentries++;
+	      statres->Nentries++;
 	      initR (&x1);
 	      initR (&x2);
 	      /* To compute the 1-norm of all errors */
-	      add (*abserr, argl->N1abserr, &x1, iscale);
-	      copyR (&argl->N1abserr, x1);
+	      add (*abserr, statres->N1abserr, &x1, iscale);
+	      copyR (&statres->N1abserr, x1);
 	      /* To compute the 2-norm of all errors */
 	      square (*abserr, &x1, iscale);
-	      add (x1, argl->N2abserr, &x2, iscale);
-	      copyR (&argl->N2abserr, x2);
+	      add (x1, statres->N2abserr, &x2, iscale);
+	      copyR (&statres->N2abserr, x2);
 	      if ((exit_code))
 		{
 		  int test;
 
-		  argl->Ndisperr++;
+		  statres->Ndisperr++;
 		  /* To compute the 1-norm of the displayed errors */
-		  add (*abserr, argl->N1disperr, &x1, iscale);
-		  copyR (&argl->N1disperr, x1);
+		  add (*abserr, statres->N1disperr, &x1, iscale);
+		  copyR (&statres->N1disperr, x1);
 		  /* To compute the 2-norm of the displayed errors */
 		  square (*abserr, &x1, iscale);
-		  add (x1, argl->N2disperr, &x2, iscale);
-		  copyR (&argl->N2disperr, x2);
-		  if ((test = cmp (*abserr, argl->Labserr)) > 0)
+		  add (x1, statres->N2disperr, &x2, iscale);
+		  copyR (&statres->N2disperr, x2);
+		  if ((test = cmp (*abserr, statres->Labserr)) > 0)
 		    {
-		      copyR (&argl->Labserr, *abserr);
-		      copyR (&argl->Crelerr, *relerr);
+		      copyR (&statres->Labserr, *abserr);
+		      copyR (&statres->Crelerr, *relerr);
+		      *Labserr_exceeded = 1;
 		    }
-		  else if (test == 0 && cmp (*relerr, argl->Crelerr) > 0)
-		    copyR (&argl->Crelerr, *relerr);
-		  if ((test = cmp (*relerr, argl->Lrelerr)) > 0)
+		  else if (test == 0 && cmp (*relerr, statres->Crelerr) > 0)
 		    {
-		      copyR (&argl->Lrelerr, *relerr);
-		      copyR (&argl->Cabserr, *abserr);
+		      copyR (&statres->Crelerr, *relerr);
+		      *Labserr_exceeded = 1;
 		    }
-		  else if (test == 0 && cmp (*abserr, argl->Cabserr) > 0)
-		    copyR (&argl->Cabserr, *abserr);
+		  if ((test = cmp (*relerr, statres->Lrelerr)) > 0)
+		    {
+		      copyR (&statres->Lrelerr, *relerr);
+		      copyR (&statres->Cabserr, *abserr);
+		      *Rabserr_exceeded = 1;
+		    }
+		  else if (test == 0 && cmp (*abserr, statres->Cabserr) > 0)
+		    {
+		      copyR (&statres->Cabserr, *abserr);
+		      *Rabserr_exceeded = 1;
+		    }
 		}
 	      delR (&x2);
 	      delR (&x1);
@@ -217,7 +226,7 @@ int cmp_fields (const char* field1, const char* field2,
       delC (&z2);
       delC (&z1);
       /* Byte by byte comparison */
-      if ((argl->optmask & _SI_MASK))
+      if (getBitAtPosition (&argl->optmask, _SI_MASK) == BIT_ON)
 	return (l1 != l2 || strNcasecmp (field1, field2, l1) != 0 ? 1 : 0);
       else
 	return (l1 != l2 || strNcmp (field1, field2, l1) != 0 ? 1 : 0);
@@ -227,22 +236,28 @@ int cmp_fields (const char* field1, const char* field2,
 static
 int cmp_lines (const char* line1, const char* line2, 
 	       unsigned long lineno1, unsigned long lineno2,  
-	       const char** ifs1, const char** ifs2, int output_mode, argslist* argl)
+	       const char** ifs1, const char** ifs2,
+	       const argslist* argl, statlist* statres)
 {
   const unsigned long fieldno_upper_limit = 8*FIELDMASK_SIZE;
-
+  int output_mode = argl->output_mode;
+  
   if (!line1 && !line2)
     return 0;
   else if (!line1)
     {
       if (output_mode >= OUTMODE_NORMAL)
 	print_lines (line1, line2, lineno1, lineno2, 0);
+      else if (output_mode == OUTMODE_RAW)
+	printf ("*:%lu\n", lineno2);
       return 1;
     }
   else if (!line2)
     {
       if (output_mode >= OUTMODE_NORMAL)
 	print_lines (line1, line2, lineno1, lineno2, 0);
+      else if (output_mode == OUTMODE_RAW)
+	printf ("%lu:*\n", lineno1);
       return 1;
     }
   else
@@ -252,6 +267,7 @@ int cmp_lines (const char* line1, const char* line2,
       size_t l1, l2;
       unsigned long fieldno1, fieldno2;
       Real abserr, relerr;
+      int Labserr_exceeded, Rabserr_exceeded;
       int rv, lines_differ = 0, _1sttime = 1;
 
       initR (&abserr);
@@ -300,12 +316,32 @@ int cmp_lines (const char* line1, const char* line2,
 	      end_field2 = string_cspn (field2, ifs2, '\0');
 	      l1 = end_field1 - field1;
 	      l2 = end_field2 - field2;
-	      rv = cmp_fields (field1, field2, fieldno1, fieldno2, l1, l2, argl, &abserr, &relerr);
+	      Labserr_exceeded = Rabserr_exceeded = 0;
+	      rv = cmp_fields (field1, field2, fieldno1, fieldno2, l1, l2, argl, statres,
+			       &abserr, &relerr, &Labserr_exceeded, &Rabserr_exceeded);
+	      if ((Labserr_exceeded))
+		{
+		  statres->Labserr_location.lineno1 = lineno1;
+		  statres->Labserr_location.fieldno1 = fieldno1;
+		  statres->Labserr_location.lineno2 = lineno2;
+		  statres->Labserr_location.fieldno2 = fieldno2;
+		}
+	      if ((Rabserr_exceeded))
+		{
+		  statres->Rabserr_location.lineno1 = lineno1;
+		  statres->Rabserr_location.fieldno1 = fieldno1;
+		  statres->Rabserr_location.lineno2 = lineno2;
+		  statres->Rabserr_location.fieldno2 = fieldno2;
+		}	      
 	      if ( rv >= 1 )
 		{
 		  if ( (output_mode > OUTMODE_QUIET) && 
-		       !(rv == 1 && argl->optmask & _SE_MASK) &&
-		       !(rv == 2 && argl->optmask & _SU_MASK))
+		       !(rv == 1 &&
+			 getBitAtPosition (&argl->optmask, _SE_MASK) ==
+			 BIT_ON) &&
+		       !(rv == 2 &&
+			 getBitAtPosition (&argl->optmask, _SU_MASK) ==
+			 BIT_ON) )
 		    {
 		      if ((_1sttime))
 			{
@@ -316,9 +352,29 @@ int cmp_lines (const char* line1, const char* line2,
 			}
 		      print_fields (field1, field2, l1, l2, lineno1, lineno2, fieldno1, fieldno2);
 		      if ( rv == 2 )
-			print_errors (abserr, relerr);
+			print_errors (abserr, relerr, 1);
 		      else
 			print_separator ();
+		    }
+		  else if ( (output_mode == OUTMODE_RAW) && 
+		       !(rv == 1 &&
+			 getBitAtPosition (&argl->optmask, _SE_MASK) ==
+			 BIT_ON) &&
+		       !(rv == 2 &&
+			 getBitAtPosition (&argl->optmask, _SU_MASK) ==
+			 BIT_ON) )
+		    {
+		      printf ("%lu:%lu:%lu:%lu:", lineno1, lineno2, fieldno1+1, fieldno2+1);
+		      if (rv == 1)
+			{
+			  fputs ("*:*:", stdout);
+			}
+		      else /* rv == 2 */
+			{
+			  print_errors (abserr, relerr, 0);
+			}
+		      printf ("%.*s ==> ", l1, field1);
+		      printf ("%.*s\n", l2, field2); 
 		    }
 		  lines_differ = 1;
 		}
@@ -379,6 +435,10 @@ int cmp_lines (const char* line1, const char* line2,
 	      printf (_("@ Line %lu in file \"%s\" is shorter than expected!\n"), 
 		      lineno2, argl->file2);
 	    }
+	  else if (output_mode == OUTMODE_RAW)
+	    {
+	      printf ("%lu:%lu:%lu:*:%s", lineno1, lineno2, fieldno1+1, field1);
+	    }
 	  return 1;
 	}
       else if (*field2 != '\0')
@@ -395,6 +455,10 @@ int cmp_lines (const char* line1, const char* line2,
 	      printf (_("@ Line %lu in file \"%s\" is shorter than expected!\n"), 
 		      lineno1, argl->file1);
 	    }
+	  else if (output_mode == OUTMODE_RAW)
+	    {
+	      printf ("%lu:%lu:*:%lu:%s", lineno1, lineno2, fieldno2+1, field2);
+	    }	  
 	  return 1;
 	}
       else
@@ -404,7 +468,8 @@ int cmp_lines (const char* line1, const char* line2,
 
 extern char** def_ifs;
 
-int cmp_files (FILE* pf1, FILE* pf2, argslist* argl)
+int cmp_files (FILE* pf1, FILE* pf2, const argslist* argl,
+	       statlist* statres)
 {
   char *line1, *line2, **ifs1, **ifs2;
   int err1, err2, files_differ = 0;
@@ -447,7 +512,7 @@ int cmp_files (FILE* pf1, FILE* pf2, argslist* argl)
 	      if ( (cmp_lines (line1, line2, 
                                lineno1, lineno2, 
                                (const char**) ifs1, (const char**) ifs2, 
-                               argl->output_mode, argl)) )
+                               argl, statres)) )
 		{
 		  files_differ = 1;
 		  if (argl->output_mode == OUTMODE_OVERVIEW)
@@ -490,7 +555,7 @@ int cmp_files (FILE* pf1, FILE* pf2, argslist* argl)
 	  if ( (cmp_lines (line1, line2, 
                            lineno1, lineno2, 
                            (const char**) ifs1, (const char**) ifs2, 
-                           argl->output_mode, argl)) )
+                           argl, statres)) )
 	    {
 	      files_differ = 1;
 	      if (argl->output_mode == OUTMODE_OVERVIEW)

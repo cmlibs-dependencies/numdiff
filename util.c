@@ -39,7 +39,7 @@
 #include "numdiff.h"
 #include "linesplit.h"
 #include <error.h>
-#include "xalloc.h"
+#include <xalloc.h>
 
 /* Use when a system call returns non-zero status.
    NAME should normally be the file name.  */
@@ -74,7 +74,7 @@ pfatal_with_name (char const *name)
 extern char** def_ifs;
 
 bool
-lines_differ (char const *s1, char const *s2, int index1, int index2, argslist* argl)
+lines_differ (char const *s1, char const *s2, int index1, int index2, const argslist* argl)
 {
   const unsigned long fieldno_upper_limit = 8*FIELDMASK_SIZE;
   register char const *f1 = s1;
@@ -84,18 +84,18 @@ lines_differ (char const *s1, char const *s2, int index1, int index2, argslist* 
   int f1_is_num, f2_is_num, f1_is_blurred, f2_is_blurred;
 
   /* Cache often-used quantities in local variables to help the compiler.  */
-  int ignore_case = argl->optmask & _SI_MASK;
+  int ignore_case = (getBitAtPosition (&argl->optmask, _SI_MASK) == BIT_ON);
   const char** ifs = (const char**)((index1) ? argl->ifs2 : argl->ifs1); 
   const struct numfmt* pnf = (index1) ? &argl->nf2 : &argl->nf1; 
-  unsigned char* ghostmask = (index1) ? argl->ghostmask2 : argl->ghostmask1;
-  unsigned char* pblurmask = (index1) ? argl->pblurmask2 : argl->pblurmask1;
-  unsigned char* tblurmask = (index1) ? argl->tblurmask2 : argl->tblurmask1; /* s1 */
+  const unsigned char* ghostmask = (index1) ? argl->ghostmask2 : argl->ghostmask1;
+  const unsigned char* pblurmask = (index1) ? argl->pblurmask2 : argl->pblurmask1;
+  const unsigned char* tblurmask = (index1) ? argl->tblurmask2 : argl->tblurmask1; /* s1 */
 
   const char** Ifs = (const char**)((index2) ? argl->ifs2 : argl->ifs1); 
   const struct numfmt* Pnf = (index2) ? &argl->nf2 : &argl->nf1; 
-  unsigned char* Ghostmask = (index2) ? argl->ghostmask2 : argl->ghostmask1;
-  unsigned char* Pblurmask = (index2) ? argl->pblurmask2 : argl->pblurmask1;
-  unsigned char* Tblurmask = (index2) ? argl->tblurmask2 : argl->tblurmask1; /* s2 */
+  const unsigned char* Ghostmask = (index2) ? argl->ghostmask2 : argl->ghostmask1;
+  const unsigned char* Pblurmask = (index2) ? argl->pblurmask2 : argl->pblurmask1;
+  const unsigned char* Tblurmask = (index2) ? argl->tblurmask2 : argl->tblurmask1; /* s2 */
 
   ifs = (!ifs) ? (const char**)def_ifs : ifs;
   Ifs = (!Ifs) ? (const char**)def_ifs : Ifs;

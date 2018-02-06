@@ -1,6 +1,6 @@
 # !/bin/sh
 #  Numdiff makefile
-#  Copyright (C)  2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  Ivano Primi  <ivprimi@libero.it>    
+#  Copyright (C)  2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Ivano Primi  <ivprimi@libero.it>    
 #
 #   Copying and distribution of this file, with or without modification,
 #   are permitted in any medium without royalty provided the copyright
@@ -10,7 +10,7 @@
 
 PACKAGE=numdiff
 PACKAGETWO=ndselect
-VERSION=5.8.1
+VERSION=5.9.0
 
 SHELL=/bin/sh
 .SUFFIXES:
@@ -71,12 +71,12 @@ LDFLAGS         =@LDFLAGS@
 # -L and -l options:
 LIBS            =@LIBS@ @LIB_CLOCK_GETTIME@
 
-OBJECTS= ./analyze.o ./arith.o ./cmpbuf.o ./cmpfns.o ./error.o ./exitfail.o ./flags.o ./getopt.o ./getopt1.o ./inout.o ./io.o ./linesplit.o ./main.o ./ndselect.o ./numutil.o ./options.o ./setmode.o ./side.o ./thrlist.o ./util.o ./xalloc-die.o ./xmalloc.o @LIBOBJS@
+OBJECTS= ./analyze.o ./arith.o ./bitvector.o ./cmpbuf.o ./cmpfns.o ./error.o ./exitfail.o ./flags.o ./getopt.o ./getopt1.o ./inout.o ./io.o ./linesplit.o ./main.o ./ndselect.o ./numutil.o ./options.o ./setmode.o ./side.o ./thrlist.o ./util.o ./xalloc-die.o ./xmalloc.o @LIBOBJS@
 
-OBJECTSONE=./analyze.o ./arith.o ./cmpbuf.o ./cmpfns.o ./error.o ./exitfail.o ./flags.o ./getopt.o ./getopt1.o ./inout.o ./io.o ./linesplit.o ./main.o ./numutil.o ./options.o ./setmode.o ./side.o ./thrlist.o ./util.o ./xalloc-die.o ./xmalloc.o @LIBOBJS@
-SOURCESONE=$(srcdir)/analyze.c $(srcdir)/arith.c $(srcdir)/cmpbuf.c $(srcdir)/cmpfns.c $(srcdir)/error.c $(srcdir)/errors.c $(srcdir)/exitfail.c $(srcdir)/flags.c $(srcdir)/getopt.c $(srcdir)/getopt1.c $(srcdir)/inout.c $(srcdir)/io.c $(srcdir)/linesplit.c $(srcdir)/main.c $(srcdir)/new.c $(srcdir)/number.c $(srcdir)/numutil.c $(srcdir)/options.c $(srcdir)/read_line.c $(srcdir)/setmode.c $(srcdir)/side.c $(srcdir)/thrlist.c $(srcdir)/util.c $(srcdir)/xalloc-die.c $(srcdir)/xmalloc.c
-OBJECTSTWO=./getopt.o ./getopt1.o ./linesplit.o ./ndselect.o
-SOURCESTWO=$(srcdir)/getopt.c $(srcdir)/getopt1.c $(srcdir)/linesplit.c $(srcdir)/ndselect.c $(srcdir)/read_line.c
+OBJECTSONE=./analyze.o ./arith.o ./bitvector.o ./cmpbuf.o ./cmpfns.o ./error.o ./exitfail.o ./flags.o ./getopt.o ./getopt1.o ./inout.o ./io.o ./linesplit.o ./main.o ./numutil.o ./options.o ./setmode.o ./side.o ./thrlist.o ./util.o ./xalloc-die.o ./xmalloc.o @LIBOBJS@
+SOURCESONE=$(srcdir)/analyze.c $(srcdir)/arith.c $(srcdir)/bitvector.c $(srcdir)/cmpbuf.c $(srcdir)/cmpfns.c $(srcdir)/error.c $(srcdir)/errors.c $(srcdir)/exitfail.c $(srcdir)/flags.c $(srcdir)/getopt.c $(srcdir)/getopt1.c $(srcdir)/inout.c $(srcdir)/io.c $(srcdir)/linesplit.c $(srcdir)/main.c $(srcdir)/new.c $(srcdir)/number.c $(srcdir)/numutil.c $(srcdir)/options.c $(srcdir)/read_line.c $(srcdir)/setmode.c $(srcdir)/side.c $(srcdir)/thrlist.c $(srcdir)/util.c $(srcdir)/xalloc-die.c $(srcdir)/xmalloc.c
+OBJECTSTWO=./bitvector.o ./getopt.o ./getopt1.o ./linesplit.o ./ndselect.o
+SOURCESTWO=$(srcdir)/bitvector.c $(srcdir)/getopt.c $(srcdir)/getopt1.c $(srcdir)/linesplit.c $(srcdir)/ndselect.c $(srcdir)/read_line.c
 DOCS=$(srcdir)/AUTHORS $(srcdir)/BUGS $(srcdir)/COPYING $(srcdir)/ChangeLog $(srcdir)/INSTALL $(srcdir)/NEWS $(srcdir)/README $(srcdir)/TODO 
 TEXISRC=$(srcdir)/docs/numdiff.txi
 FDLTEXI=$(srcdir)/docs/fdl.texi
@@ -91,7 +91,7 @@ PACKAGE_POT=$(srcdir)/po/$(PACKAGE)/$(PACKAGE).pot
 PACKAGETWO_POT=$(srcdir)/po/$(PACKAGETWO)/$(PACKAGETWO).pot
 PACKAGE_IT=$(srcdir)/po/$(PACKAGE)/it
 PACKAGETWO_IT=$(srcdir)/po/$(PACKAGETWO)/it
-IT_LOC_DIR=$(DESTDIR)$(LOCALEDIR)/it/LC_MESSAGES
+IT_LOC_DIR="$(DESTDIR)$(LOCALEDIR)/it/LC_MESSAGES"
 
 GARBAGE=./numdiff.aux ./numdiff.cp ./numdiff.cps ./numdiff.fn ./numdiff.ky ./numdiff.log ./numdiff.pg ./numdiff.toc ./numdiff.tp ./numdiff.vr ./config.log ./config.status ./config.h.in.save ./config.h
 
@@ -193,26 +193,26 @@ $(PACKAGETWO_IT).mo: $(PACKAGETWO_IT).po
 # Rules needed by the installation process.
 
 installdirs: all
-	$(MKDIR) $(DESTDIR)$(BINDIR)
-	$(MKDIR) $(DESTDIR)$(DOCDIR)
-	$(MKDIR) $(DESTDIR)$(INFODIR)
-	$(MKDIR) $(DESTDIR)$(MANDIR)
+	$(MKDIR) "$(DESTDIR)$(BINDIR)"
+	$(MKDIR) "$(DESTDIR)$(DOCDIR)"
+	$(MKDIR) "$(DESTDIR)$(INFODIR)"
+	$(MKDIR) "$(DESTDIR)$(MANDIR)"
 	$(MKDIR) $(IT_LOC_DIR)
 
 install: installdirs html info pdf txt
-	$(INSTALL_PROGRAM) $(PACKAGE) $(PACKAGETWO) $(DESTDIR)$(BINDIR)
-	$(INSTALL_DATA) $(DOCS) $(DESTDIR)$(DOCDIR)
-	$(INSTALL_DATA) $(MANFILE) $(DESTDIR)$(MANDIR)
-	$(INSTALL_DATA) $(MANFILETWO) $(DESTDIR)$(MANDIR)
-	$(INSTALL_DATA) $(HTMLFILE) $(DESTDIR)$(DOCDIR)
-	$(INSTALL_DATA) $(PDFFILE) $(DESTDIR)$(DOCDIR)
-	$(INSTALL_DATA) $(TXTFILE) $(DESTDIR)$(DOCDIR)
+	$(INSTALL_PROGRAM) $(PACKAGE) $(PACKAGETWO) "$(DESTDIR)$(BINDIR)"
+	$(INSTALL_DATA) $(DOCS) "$(DESTDIR)$(DOCDIR)"
+	$(INSTALL_DATA) $(MANFILE) "$(DESTDIR)$(MANDIR)"
+	$(INSTALL_DATA) $(MANFILETWO) "$(DESTDIR)$(MANDIR)"
+	$(INSTALL_DATA) $(HTMLFILE) "$(DESTDIR)$(DOCDIR)"
+	$(INSTALL_DATA) $(PDFFILE) "$(DESTDIR)$(DOCDIR)"
+	$(INSTALL_DATA) $(TXTFILE) "$(DESTDIR)$(DOCDIR)"
 	$(POST_INSTALL)
-	$(INSTALL_DATA) $(INFOFILE) $(DESTDIR)$(INFODIR)
-	$(INSTALL_DATA) $(INFOFILE).gz $(DESTDIR)$(INFODIR)
+	$(INSTALL_DATA) $(INFOFILE) "$(DESTDIR)$(INFODIR)"
+	$(INSTALL_DATA) $(INFOFILE).gz "$(DESTDIR)$(INFODIR)"
 	if $(SHELL) -c "$(INSTINFO) --version" \
 	>/dev/null 2>&1; then \
-	$(INSTINFO) --dir-file=$(DESTDIR)$(INFODIR)/dir $(DESTDIR)$(INFODIR)/numdiff.info; \
+	$(INSTINFO) --dir-file="$(DESTDIR)$(INFODIR)/dir" "$(DESTDIR)$(INFODIR)/numdiff.info"; \
 	else true; fi
 
 install-nls: install
@@ -222,19 +222,19 @@ install-nls: install
 # Rules needed to removed the installed stuff
 
 uninstall:
-	$(RM) $(DESTDIR)$(BINDIR)/$(PACKAGE)
-	$(RM) $(DESTDIR)$(BINDIR)/$(PACKAGETWO)
-	$(RM) $(DESTDIR)$(DOCDIR)/*
-	$(RMDIR) $(DESTDIR)$(DOCDIR)
-	$(INSTINFO) --delete $(DESTDIR)$(INFODIR)/numdiff.info $(DESTDIR)$(INFODIR)/dir
-	$(RM) $(DESTDIR)$(INFODIR)/numdiff.info.gz
-	$(RM) $(DESTDIR)$(INFODIR)/numdiff.info
-	$(RM) $(DESTDIR)$(MANDIR)/$(PACKAGE).1
-	$(RM) $(DESTDIR)$(MANDIR)/$(PACKAGETWO).1
+	$(RM) "$(DESTDIR)$(BINDIR)/$(PACKAGE)"
+	$(RM) "$(DESTDIR)$(BINDIR)/$(PACKAGETWO)"
+	$(RM) "$(DESTDIR)$(DOCDIR)"/*
+	$(RMDIR) "$(DESTDIR)$(DOCDIR)"
+	$(INSTINFO) --delete "$(DESTDIR)$(INFODIR)/numdiff.info" "$(DESTDIR)$(INFODIR)/dir"
+	$(RM) "$(DESTDIR)$(INFODIR)/numdiff.info.gz"
+	$(RM) "$(DESTDIR)$(INFODIR)/numdiff.info"
+	$(RM) "$(DESTDIR)$(MANDIR)/$(PACKAGE).1"
+	$(RM) "$(DESTDIR)$(MANDIR)/$(PACKAGETWO).1"
 
 uninstall-nls: uninstall
-	$(FIND) $(DESTDIR)$(LOCALEDIR) -name '$(PACKAGE).mo' -exec $(RM) \{\} \;
-	$(FIND) $(DESTDIR)$(LOCALEDIR) -name '$(PACKAGETWO).mo' -exec $(RM) \{\} \;
+	$(FIND) "$(DESTDIR)$(LOCALEDIR)" -name '$(PACKAGE).mo' -exec $(RM) \{\} \;
+	$(FIND) "$(DESTDIR)$(LOCALEDIR)" -name '$(PACKAGETWO).mo' -exec $(RM) \{\} \;
 
 # Cleaning rules
 
@@ -290,6 +290,7 @@ copy: createdirs
 	$(CP) $(TXTFILE) $(srcdir)/$(PACKAGE)-$(VERSION)/docs
 	$(CP) $(srcdir)/analyze.c $(srcdir)/$(PACKAGE)-$(VERSION)
 	$(CP) $(srcdir)/arith.c $(srcdir)/$(PACKAGE)-$(VERSION)
+	$(CP) $(srcdir)/bitvector.c $(srcdir)/$(PACKAGE)-$(VERSION)
 	$(CP) $(srcdir)/cmpbuf.c $(srcdir)/$(PACKAGE)-$(VERSION)
 	$(CP) $(srcdir)/cmpfns.c $(srcdir)/$(PACKAGE)-$(VERSION)
 	$(CP) $(srcdir)/error.c $(srcdir)/$(PACKAGE)-$(VERSION)
@@ -314,6 +315,7 @@ copy: createdirs
 	$(CP) $(srcdir)/util.c $(srcdir)/$(PACKAGE)-$(VERSION)
 	$(CP) $(srcdir)/xalloc-die.c $(srcdir)/$(PACKAGE)-$(VERSION)
 	$(CP) $(srcdir)/xmalloc.c $(srcdir)/$(PACKAGE)-$(VERSION)
+	$(CP) $(srcdir)/bitvector.h $(srcdir)/$(PACKAGE)-$(VERSION)
 	$(CP) $(srcdir)/cmpbuf.h $(srcdir)/$(PACKAGE)-$(VERSION)
 	$(CP) $(srcdir)/error.h $(srcdir)/$(PACKAGE)-$(VERSION)
 	$(CP) $(srcdir)/exitfail.h $(srcdir)/$(PACKAGE)-$(VERSION)

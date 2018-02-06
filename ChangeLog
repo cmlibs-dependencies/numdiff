@@ -1,4 +1,327 @@
-2013-09-15  Ivano Primi  <ivprimi(atlibero(dot)it>
+2017-02-19  Ivano Primi  <ivprimi(at)libero(dot)it>
+
+	* Version 5.9.0 released.
+
+	* bitvector.h, bitvector.c: Doc fixes.
+
+	* config.h.in (VERSION): From 5.8.1 to 5.9.0.
+	Doc fixes.
+
+	* util.c (lines_differ):
+	Signature changed: the parameter `argl' is now of type
+	`const argslist*' instead of `argslist*'.
+	(lines_differ): `ghostmask', `pblurmask', and `tblurmask'
+	are now declared as pointers to `const unsigned' data.
+	(lines_differ): `Ghostmask', `Pblurmask', and `Tblurmask'
+	are now declared as pointers to `const unsigned' data.
+
+	(lines_differ): getBitAtPosition() is now called on the mask of the command
+	line options to if the bit _SI_MASK is on.
+
+	* thrlist.c, read_line.c: Doc fixes.
+
+	* options.c (print_version): Copyright statement updated.
+	(print_help): Help message updated.
+
+	(nfset): The bit fields corresponding to the command line options
+	specified by the user are now set by calling setBitAtPosition().
+
+	(setargs): Added long option "raw".
+
+	(setargs): The local variable `i' was renamed as `cmpRes'.
+	All occurrences accordingly changed.
+
+	(setargs): The local variable `w' is now initialized to the
+	value DEF_ATMOST_NCOLS.
+
+	(setargs): The initialization of the global variables `binary',
+	`suppress_common_lines', `ignore_white_space', `expand_tabs', `speed_large_files'
+	and `program_name' was moved to the function load_defaults() of main.c.
+	(setargs): The structure pointed to by the argument `list' is now initialized
+	in the function load_defaults() of main.c.
+
+	(setargs): The bit fields corresponding to the command line options
+	specified by the user are now set by calling setBitAtPosition().
+	(setargs): getBitAtPosition() is now called on the mask of the command
+	line options to check if the bits _F_MASK and _SO_MASK are off.
+	(setargs): The bit fields corresponding to the command line options
+	`-B', `-T', `-F', `-c', `-l', `-o', and `--raw' are also set if appropriate.
+	(setargs): getBitAtPosition() is now called on the mask of the command
+	line options to check if any of the bits _SV_MASK, _B_MASK, _SO_MASK,
+	_Q_MASK, and _RAW_MASK is on.
+	(setargs): getBitAtPosition() is now called on the mask of the command
+	line options to check if the bits _V_MASK and _H_MASK are off.
+
+	Doc fixes.
+
+	* numutil.c: Doc fixes.
+
+	* numdiff.h: Include "bitvector.h".
+	The field `optmask' of the structure `argslist' is now of type `bitvector'.
+
+	New structure `difference_location'.
+
+	New structure `statlist'.
+	The fields `Labserr',  `Crelerr',  `Lrelerr',  `Cabserr',
+	`N1abserr', `N1disperr', `N2abserr', `N2disperr', `Nentries', and `Ndisperr'
+	were moved from the structure `argslist' to the structure `statlist'.
+
+	The _*_MASK macros were redefined as enumeration values.
+	Enumeration values _ST_MASK, _SB_MASK, _SD_MASK, _SF_MASK,
+	_C_MASK, and _RAW_MASK were introduced.
+	New enumeration value MAX_NUMDIFF_OPTIONS.
+
+	The OUTMODE_* macros were redefined as enumeration values.
+	Enumeration value OUTMODE_RAW was introduced.
+
+	The macros CLASSIC_FORMULA, WR_TO_FIRST_FILE, and
+	WR_TO_SECOND_FILE were redefined as enumeration values.
+
+	The declarations of the functions diff_2_files(), read_files(),
+	and lines_differ() were adjusted to comply with the new signatures.
+
+	Doc fixes.
+
+	* new.c: Doc fixes.
+
+	* ndselect.h: Include "bitvector.h".
+	The field `optmask' of the structure `Argslist' is now of type `bitvector'.
+
+	The ___*_MASK macros were redefined as enumeration values.
+	Enumeration values ___L_MASK and ___O_MASK were introduced.
+	New enumeration value MAX_NDSELECT_OPTIONS.
+
+	Doc fixes.
+
+	* ndselect.c (print_selversion): Copyright statement updated.
+
+	(scan_file): getBitAtPosition() is now called on the mask of the
+	command line options to determine whether the bit ___X_MASK is on or off.
+	(set_args): The field `optmask' of the structure pointed to by `list'
+	is now initialized by means of a call to newBitVector().
+	(set_args): The bit fields corresponding to the command line options
+	specified by the user are now set by calling setBitAtPosition().
+	(set_args): To check if the bits ___H_MASK and ___V_MASK are off,
+	getBitAtPosition() is now called on the mask of the command line options.
+
+	(main): New boolean variables `pHelp' and `pVersion' of type `int'.
+	(main): getBitAtPosition() is called on the mask
+	of the command line options to check if the bit ___H_MASK is on,
+	then `pHelp' is initialized with the result of this check.
+	(main): getBitAtPosition() is called on the mask
+	of the command line options to check if the bit ___V_MASK is on,
+	then `pVersion' is initialized with the result of this check.
+	(main): The information about version number, copyright, and
+	distribution terms of Numdiff is now printed if `pVersion' is non-zero.
+	(main): The help text of Numdiff is now printed if `pHelp' is non-zero.
+	(main): The determination of the exit code of the program when
+	any of the options `--help' and `--version' is specified was made more compact
+	by means of the operator `?:'.
+
+	Doc fixes.
+
+	* main.c:
+	Extern declaration of cmp_files() changed according to the new signature of the function.
+
+	(load_defaults): New static function.
+	(init_mpa_support): Signature changed: new parameter `statres'
+	of type `statlist*'. All callers changed.
+	(init_mpa_support): Since the fields `Labserr', `Crelerr', `Lrelerr', `Cabserr',
+	`N1abserr', `N1disperr', `N2abserr', `N2disperr' were moved from the structure
+	`argslist' to the new structure type `statlist', they are initialized now
+	via the pointer `statres'.
+	(dismiss_mpa_support): Signature changed: new parameter `statres'
+	of type `statlist*'. All callers changed.
+	(dismiss_mpa_support): The memory allocated for the fields `Labserr', `Crelerr',
+	`Lrelerr', `Cabserr', `N1abserr', `N1disperr', `N2abserr', and `N2disperr'
+	is now freed by referring to them via the pointer `statres'. 
+
+	(compare_files): Signature changed: the parameter `list' is now of type
+	`const argslist*' instead of `argslist*'.
+
+	(isLocationDefined): New static function.
+
+	(print_statistics): Signature changed: the parameter `list' is now of type
+	`const argslist*' instead of `argslist*', new parameter `statres'
+	of type `statlist*'. All callers changed.
+	(print_statistics): Since the fields `Labserr', `Crelerr', `Lrelerr', `Cabserr',
+	`N1abserr', `N1disperr', `N2abserr', `N2disperr', `Nentries', and `Ndisperr'
+	were moved from the structure `argslist' to the new structure type `statlist',
+	they are accessed now via the pointer `statres'.
+	(print_statistics): Many of the messages printed to standard output
+	were corrected.
+	(print_statistics): If the compared files show numeric differences which are
+	important to the user, the locations of the occurrences of the largest absolute
+	difference are printed to standard output, as well as the locations of the
+	occurrences of the largest relative difference.
+
+	(clean_memory): New static function.
+
+	(main): New variable `statres' of type `statlist', new boolean variables
+	`pHelp' and `pVersion' of type `int'.
+
+	(main): To initialize the structures `list' and `statres' with
+	reasonable defaults, load_defaults() is called immediately before
+	calling init_mpa_support().
+
+	(main): If setargs() fails, the new function clean_memory() is now called
+	before exiting to free the memory dynamically allocated for some structures.
+
+	(main): getBitAtPosition() is called on the mask
+	of the command line options to check if the bit _H_MASK is on,
+	then `pHelp' is initialized with the result of this check.
+	(main): getBitAtPosition() is called on the mask
+	of the command line options to check if the bit _V_MASK is on,
+	then `pVersion' is initialized with the result of this check.
+	(main): The information about version number, copyright, and
+	distribution terms of Numdiff is now printed if `pVersion' is non-zero.
+	(main): The help text of Numdiff is now printed if `pHelp' is non-zero.
+	(main): If the user has requested the help text or the
+	information about version number, copyright, and distribution terms
+	of Numdiff, the new function clean_memory() is now called
+	before exiting to free the memory dynamically allocated for some structures.
+	(main): The determination of the exit code of the program when
+	any of the options `--help' and `--version' is specified was made more compact
+	by means of the operator `?:'.
+
+	(main): getBitAtPosition() is called on the mask
+	of the command line options to check if the bit _Q_MASK is on.
+
+	(main): If open_files() fails, the new function clean_memory() is now called
+	before exiting to free the memory dynamically allocated for some structures.
+
+	(main): getBitAtPosition() is called on the mask of the command line options
+	to check if one or more of the bits _F_MASK, _Z_MASK, or _SZ_MASK is on.
+
+	(main): If the function compare_files() has returned a negative value,
+	clean_memory() and close_files() are called before exiting.
+
+	(main): getBitAtPosition() is now called on the mask of the command line options
+	to check if the bit _F_MASK is off.
+
+	(main): If any of the functions rewind_files() and set_file_pointers()
+	has returned a value different from EXIT_SUCCESS, the new function
+	clean_memory() is now called before exiting to free the memory dynamically
+	allocated for some structures.
+
+	(main): getBitAtPosition() is now called on the mask of the command line options
+	to check if the bit _SS_MASK is on.
+
+	(main): In case of normal termination of the program, the new function
+	clean_memory() is now called before exiting to free the memory dynamically
+	allocated for some structures.
+
+	Doc fixes.
+
+	* linesplit.h, linesplit.c: Doc fixes.
+
+	* io.c (print_errors): Signature changed:
+	new parameter `human_readable_format' of type `int'.
+	All callers changed.
+
+	(print_errors): The old way of printing errors is now
+	used only if `human_readable_format' is true:
+	if `human_readable_format' is false, errors are printed in raw format.
+
+	Doc fixes.
+
+	* inout.c (find_and_hash_each_line): Signature changed:
+	the parameter `argl' is now of type `const argslist*' instead of `argslist*'.
+
+	(find_and_hash_each_line): getBitAtPosition() is now called on the mask
+	of the command line options to check if the bit _SI_MASK is on.
+
+	(find_and_hash_each_line): The local variables `ghostmask', `pblurmask'
+	and `tblurmask' are now of type `const unsigned char*' instead of `unsigned char*'.
+
+	(read_files): Signature changed:
+	the parameter `argl' is now of type `const argslist*' instead of `argslist*'.
+	(read_files): The local variables `ifs1' and `ifs2' are now
+	of type `const char**' instead of `char**'.
+	(read_files): `ifs1' and `ifs2' are not any longer casted to `const char**'
+	when calling find_and_hash_each_line().
+
+	* flags.c, errors.c: Doc fixes.
+
+	* cmpfns.c:
+	Extern declaration of print_errors() changed according to the new signature of the function.
+
+	(cmp_fields): Signature changed: the parameter `argl' is now of type `const argslist*'
+	instead of `argslist*', new parameter `statres' of type `statlist*', new parameters
+	`Labserr_exceeded' and `Rabserr_exceeded' of type `int*'. All callers changed.
+
+	(cmp_fields): getBitAtPosition() is now called on the mask of the command line options
+	to check if the bit _2_MASK is off.
+	(cmp_fields): getBitAtPosition() is now called on the mask of the command line options
+	to check if the bit _SS_MASK is on.
+	(cmp_fields): getBitAtPosition() is now called on the mask of the command line options
+	to check if the bit _SI_MASK is on.
+
+	(cmp_fields): The results of the statistic analysis are not any longer stored
+	in the structure pointed to by `argl', but in the structure pointed to by `statres'.
+	(cmp_fields): The integer variable pointed to by `Labserr_exceeded' is set to one
+	if the computed absolute error exceeds the current value of the largest absolute error,
+	or if these two values are equal but the computed relative error exceeds
+	the relative error associated to the current value of the largest absolute error.
+	(cmp_fields): The integer variable pointed to by `Rabserr_exceeded' is set to one
+	if the computed relative error exceeds the current value of the largest relative error,
+	or if these two values are equal but the computed absolute error exceeds
+	the absolute error associated to the current value of the largest relative error.
+
+	(cmp_lines): Signature changed: the integer parameter `output_mode' was removed,
+	the parameter `argl' is now of type `const argslist*' instead of `argslist*',
+	new parameter `statres' of type `statlist*'. All callers changed.
+
+	(cmp_lines): New local integer variable `output_mode', which is initialized
+	with the value passed through the `argslist' structure.
+	(cmp_lines): Added output instructions in raw output mode for the case of
+	a line only present in one of the compared files.
+
+	(cmp_lines): New local integer (boolean) variables
+	`Labserr_exceeded' and `Rabserr_exceeded'.
+	(cmp_lines): Before calling cmp_fields(), `Labserr_exceeded' and `Rabserr_exceeded'
+	are both initialized to zero.
+	(cmp_lines): If `Labserr_exceeded' is non-zero after calling cmp_fields(),
+	the current line numbers and field numbers are stored in the structure
+	`statres->Labserr_location'.
+	(cmp_lines): If `Rabserr_exceeded' is non-zero after calling cmp_fields(),
+	the current line numbers and field numbers are stored in the structure
+	`statres->Rabserr_location'.
+
+	(cmp_lines): getBitAtPosition() is now called on the mask of the command line options
+	to check if the bit _SE_MASK is on.
+	(cmp_lines): getBitAtPosition() is now called on the mask of the command line options
+	to check if the bit _SU_MASK is on.
+
+	(cmp_lines): Added output instructions to mark corresponding fields as different
+	when the output mode is raw.
+	(cmp_lines): Added output instruction in raw output mode for the case of
+	a line in the second file which is shorter than the corresponding line from the first file.
+	(cmp_lines): Added output instruction in raw output mode for the case of
+	a line in the first file which is shorter than the corresponding line from the second file.
+
+	(cmp_files): Signature changed: the parameter `argl' is now of type
+	`const argslist*' instead of `argslist*', new parameter `statres'
+	of type `statlist*'. All callers changed.
+
+	Doc fixes.
+
+	* arith.c: Doc fixes.
+
+	* analyze.c (diff_2_files):
+	The last argument is now a pointer to a constant argslist
+	since the function does not change the pointed structu
+
+	(diff_2_files): The value of the bit _M_MASK is now retrieved by calling
+	getBitAtPosition() on the mask of the command line options.
+	(diff_2_files): getBitAtPosition() is now called on the mask of the command line options
+	to check if the bit _F_MASK is on.
+
+2016-12-31  Ivano Primi  <ivprimi(at)libero(dot)it>
+
+	* bitvector.c, bitvector.h: New file.
+
+2013-09-15  Ivano Primi  <ivprimi(at)libero(dot)it>
 
 	* Version 5.8.1 released.
 

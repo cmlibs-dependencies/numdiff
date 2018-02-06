@@ -1,14 +1,14 @@
 # Italian messages for numdiff
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  Ivano Primi <ivprimi@libero.it>
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Ivano Primi <ivprimi@libero.it>
 # This file is distributed under the same license as the Numdiff program.
-# Ivano Primi <ivprimi@libero.it>, 2013.
+# Ivano Primi <ivprimi@libero.it>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: numdiff 5.8.1\n"
+"Project-Id-Version: numdiff 5.9.0\n"
 "Report-Msgid-Bugs-To: ivprimi@libero.it\n"
-"POT-Creation-Date: 2013-08-07 15:35+0200\n"
-"PO-Revision-Date: 2013-09-15 17:43+0200\n"
+"POT-Creation-Date: 2017-02-12 22:11+0100\n"
+"PO-Revision-Date: 2017-01-01 17:16+0100\n"
 "Last-Translator: Ivano Primi <ivprimi@libero.it>\n"
 "Language-Team: ITALIAN <ivprimi@libero.it>\n"
 "Language: Italian\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1 ? 1 : 0;\n"
 
-#: cmpfns.c:277 cmpfns.c:293 cmpfns.c:347 cmpfns.c:363
+#: cmpfns.c:293 cmpfns.c:309 cmpfns.c:403 cmpfns.c:419
 #, c-format
 msgid ""
 "@ Line %lu in file \"%s\"\n"
@@ -26,12 +26,12 @@ msgstr ""
 "@ La linea %lu nel file \"%s\"\n"
 "  contiene troppi campi per essere elaborata correttamente!\n"
 
-#: cmpfns.c:379 cmpfns.c:395
+#: cmpfns.c:435 cmpfns.c:455
 #, c-format
 msgid "@ Line %lu in file \"%s\" is shorter than expected!\n"
 msgstr "@ La linea %lu nel file \"%s\" è più corta del previsto\n"
 
-#: cmpfns.c:531 cmpfns.c:556 cmpfns.c:589 cmpfns.c:608
+#: cmpfns.c:596 cmpfns.c:621 cmpfns.c:654 cmpfns.c:673
 #, c-format
 msgid ""
 "\n"
@@ -42,7 +42,7 @@ msgstr ""
 "***  Il file \"%s\" è un file binario,\n"
 "***  non è possibile leggere dati da esso\n"
 
-#: cmpfns.c:534 cmpfns.c:559 cmpfns.c:592 cmpfns.c:613
+#: cmpfns.c:599 cmpfns.c:624 cmpfns.c:657 cmpfns.c:678
 #, c-format
 msgid ""
 "\n"
@@ -51,7 +51,7 @@ msgstr ""
 "\n"
 "***  Errore in lettura dal file \"%s\"\n"
 
-#: cmpfns.c:537 cmpfns.c:562 cmpfns.c:595 cmpfns.c:618
+#: cmpfns.c:602 cmpfns.c:627 cmpfns.c:660 cmpfns.c:683
 #, c-format
 msgid ""
 "\n"
@@ -60,7 +60,7 @@ msgstr ""
 "\n"
 "***  Esaurimento di memoria durante la lettura del file \"%s\"\n"
 
-#: cmpfns.c:544 cmpfns.c:567 cmpfns.c:574 cmpfns.c:599
+#: cmpfns.c:609 cmpfns.c:632 cmpfns.c:639 cmpfns.c:664
 #, c-format
 msgid ""
 "\n"
@@ -70,12 +70,12 @@ msgstr ""
 "***  Raggiunta la fine del file \"%s\"\n"
 "***  mentre si cercava di leggere la linea %lu.\n"
 
-#: cmpfns.c:545 cmpfns.c:568 cmpfns.c:575 cmpfns.c:600
+#: cmpfns.c:610 cmpfns.c:633 cmpfns.c:640 cmpfns.c:665
 #, c-format
 msgid "***  File \"%s\" has more lines than file \"%s\",\n"
 msgstr "***  Il file \"%s\" ha più linee del file \"%s\",\n"
 
-#: cmpfns.c:547 cmpfns.c:570 cmpfns.c:577 cmpfns.c:602
+#: cmpfns.c:612 cmpfns.c:635 cmpfns.c:642 cmpfns.c:667
 #, c-format
 msgid ""
 "***  line %lu is the last one read from file \"%s\"\n"
@@ -168,7 +168,7 @@ msgstr "%s: l'opzione `-W %s' è ambigua\n"
 msgid "%s: option `-W %s' doesn't allow an argument\n"
 msgstr "%s: l'opzione `-W %s' non vuole argomenti\n"
 
-#: inout.c:347 util.c:121 util.c:136 util.c:242 util.c:258
+#: inout.c:348 util.c:121 util.c:136 util.c:242 util.c:258
 #, c-format
 msgid ""
 "***  Fatal error occurred in function %s:\n"
@@ -178,7 +178,7 @@ msgstr ""
 "***  l'esecuzione della funzione %s:\n"
 "%s"
 
-#: inout.c:349 util.c:123 util.c:138 util.c:244 util.c:260
+#: inout.c:350 util.c:123 util.c:138 util.c:244 util.c:260
 msgid ""
 "***  a very long line has been encountered which contains\n"
 "***  too many fields to be correctly handled\n"
@@ -186,15 +186,15 @@ msgstr ""
 "***  È stata incontrata una linea molto lunga che contiene\n"
 "***  troppi campi per poter essere elaborata correttamente\n"
 
-#: io.c:127
+#: io.c:129
 msgid "@ Absolute error = "
 msgstr "@ Errore assoluto = "
 
-#: io.c:129
+#: io.c:131
 msgid ", Relative error = "
 msgstr ", Errore relativo = "
 
-#: main.c:312
+#: main.c:361
 msgid ""
 "\n"
 "  In the computation of the following quantities\n"
@@ -204,7 +204,7 @@ msgstr ""
 "  Nel calcolo dei seguenti valori vengono considerati\n"
 "  solo gli errori con segno positivo:\n"
 
-#: main.c:314
+#: main.c:363
 msgid ""
 "  differences due to numeric fields of the second file that are\n"
 "  less than the corresponding fields in the first file are neglected\n"
@@ -215,7 +215,7 @@ msgstr ""
 "  del primo file sono state tralasciate\n"
 "\n"
 
-#: main.c:319
+#: main.c:368
 msgid ""
 "\n"
 "  In the computation of the following quantities\n"
@@ -225,7 +225,7 @@ msgstr ""
 "  Nel calcolo dei seguenti valori vengono considerati\n"
 "  solo gli errori con segno negativo:\n"
 
-#: main.c:321
+#: main.c:370
 msgid ""
 "  differences due to numeric fields of the second file that are\n"
 "  greater than the corresponding fields in the first file are neglected\n"
@@ -236,7 +236,7 @@ msgstr ""
 "  del primo file sono state tralasciate\n"
 "\n"
 
-#: main.c:327
+#: main.c:376
 msgid ""
 "\n"
 "No numeric comparison has been done\n"
@@ -244,7 +244,7 @@ msgstr ""
 "\n"
 "Non è stato effettuato alcun confronto numerico\n"
 
-#: main.c:331
+#: main.c:380
 #, c-format
 msgid ""
 "\n"
@@ -263,7 +263,7 @@ msgstr[1] ""
 "Sono stati effettuati %d confronti numerici e\n"
 "le differenze numeriche rilevate sono tutte trascurabili\n"
 
-#: main.c:338
+#: main.c:387
 #, c-format
 msgid ""
 "\n"
@@ -282,7 +282,7 @@ msgstr[1] ""
 "Sono stati effettuati %d confronti numerici e tutti\n"
 "hanno prodotto un risultato oltre la soglia di tolleranza\n"
 
-#: main.c:346
+#: main.c:395
 #, c-format
 msgid ""
 "\n"
@@ -297,7 +297,7 @@ msgstr[1] ""
 "\n"
 "Sono stati effettuati %d confronti numerici,\n"
 
-#: main.c:351
+#: main.c:400
 #, c-format
 msgid ""
 "only one numeric comparison has produced an outcome\n"
@@ -312,15 +312,15 @@ msgstr[1] ""
 "%d confronti numerici hanno prodotto un risultato\n"
 "oltre la soglia di tolleranza\n"
 
-#: main.c:356
+#: main.c:405
 msgid ""
 "\n"
-"Largest absolute error in the set of relevant numerical differences:\n"
+"Largest absolute error in the set of the major numerical differences:\n"
 msgstr ""
 "\n"
 "Massimo errore assoluto nell'insieme delle differenze numeriche rilevanti:\n"
 
-#: main.c:359
+#: main.c:408
 msgid ""
 "\n"
 "Corresponding relative error:\n"
@@ -328,15 +328,30 @@ msgstr ""
 "\n"
 "Corrispondente errore relativo:\n"
 
-#: main.c:362
+#: main.c:412 main.c:425
+#, c-format
 msgid ""
 "\n"
-"Largest relative error in the set of relevant numerical differences:\n"
+"First occurrence (#line, #field) in the  first file: %lu, %lu\n"
+msgstr ""
+"\n"
+"Prima posizione di rinvenimento (#linea, #campo) nel primo file: %lu, %lu\n"
+
+#: main.c:414 main.c:427
+#, c-format
+msgid "First occurrence (#line, #field) in the second file: %lu, %lu\n"
+msgstr ""
+"Prima posizione di rinvenimento (#linea, #campo) nel secondo file: %lu, %lu\n"
+
+#: main.c:418
+msgid ""
+"\n"
+"Largest relative error in the set of the major numerical differences:\n"
 msgstr ""
 "\n"
 "Massimo errore relativo nell'insieme delle differenze numeriche rilevanti:\n"
 
-#: main.c:365
+#: main.c:421
 msgid ""
 "\n"
 "Corresponding absolute error:\n"
@@ -344,23 +359,25 @@ msgstr ""
 "\n"
 "Corrispondente errore assoluto:\n"
 
-#: main.c:369
+#: main.c:431
 msgid ""
+"\n"
 "\n"
 "Sum of all absolute errors:\n"
 msgstr ""
 "\n"
+"\n"
 "Somma degli errori assoluti:\n"
 
-#: main.c:372
+#: main.c:434
 msgid ""
 "\n"
-"Sum of the relevant absolute errors:\n"
+"Sum of the major absolute errors:\n"
 msgstr ""
 "\n"
 "Somma degli errori assoluti non trascurabili:\n"
 
-#: main.c:378
+#: main.c:440
 msgid ""
 "\n"
 "Arithmetic mean of all absolute errors:\n"
@@ -368,15 +385,15 @@ msgstr ""
 "\n"
 "Media aritmetica degli errori assoluti:\n"
 
-#: main.c:381
+#: main.c:443
 msgid ""
 "\n"
-"Arithmetic mean of the relevant absolute errors:\n"
+"Arithmetic mean of the major absolute errors:\n"
 msgstr ""
 "\n"
 "Media aritmetica degli errori assoluti non trascurabili:\n"
 
-#: main.c:390
+#: main.c:452
 msgid ""
 "\n"
 "Square root of the sum of the squares of all absolute errors:\n"
@@ -385,7 +402,7 @@ msgstr ""
 "Radice quadrata della somma dei quadrati\n"
 "di tutti gli errori assoluti:\n"
 
-#: main.c:393
+#: main.c:455
 msgid ""
 "\n"
 "Quadratic mean of all absolute errors:\n"
@@ -393,30 +410,30 @@ msgstr ""
 "\n"
 "Media quadratica degli errori assoluti:\n"
 
-#: main.c:401
+#: main.c:463
 msgid ""
 "\n"
 "Square root of the sum of the squares\n"
-"of the relevant absolute errors:\n"
+"of the major absolute errors:\n"
 msgstr ""
 "\n"
 "Radice quadrata della somma dei quadrati\n"
 "di tutti gli errori assoluti non trascurabili:\n"
 
-#: main.c:404
+#: main.c:466
 msgid ""
 "\n"
-"Quadratic mean of the relevant absolute errors:\n"
+"Quadratic mean of the major absolute errors:\n"
 msgstr ""
 "\n"
 "Media quadratica degli errori assoluti non trascurabili:\n"
 
-#: main.c:428
+#: main.c:504
 #, c-format
 msgid "***  %s: memory exhausted\n"
 msgstr "***  %s: memoria esaurita\n"
 
-#: main.c:494
+#: main.c:557
 msgid ""
 "\n"
 "***  The requested comparison cannot be performed:\n"
@@ -424,12 +441,12 @@ msgstr ""
 "\n"
 "***  Il confronto richiesto non può essere effettuato:\n"
 
-#: main.c:495
+#: main.c:558
 #, c-format
 msgid "***  At least one between \"%s\" and \"%s\" is a binary file\n"
 msgstr "***  Almeno uno tra \"%s\" e \"%s\" è un file binario\n"
 
-#: main.c:521
+#: main.c:583
 #, c-format
 msgid ""
 "\n"
@@ -438,7 +455,7 @@ msgstr ""
 "\n"
 "+++  I file \"%s\" e \"%s\" hanno la stessa struttura\n"
 
-#: main.c:524
+#: main.c:586
 #, c-format
 msgid ""
 "\n"
@@ -447,7 +464,7 @@ msgstr ""
 "\n"
 "+++  I file \"%s\" e \"%s\" sono uguali\n"
 
-#: main.c:528
+#: main.c:590
 #, c-format
 msgid ""
 "\n"
@@ -577,7 +594,7 @@ msgid ""
 "for a range of integer values, like 1-, 3-5 or -7.\n"
 msgstr ""
 "RANGE, RANGE1 e RANGE2 stanno per un valore intero positivo oppure\n"
-"per un intervallo di valori interi, per esempio 1-, 3-5 or -7.\n"
+"per un intervallo di valori interi, per esempio 1-, 3-5 o -7.\n"
 
 #: options.c:70
 msgid ""
@@ -617,15 +634,16 @@ msgstr ""
 
 #: options.c:77 options.c:81
 msgid "(The default set of delimiters is space, tab and newline)."
-msgstr "(L'insieme predefinito è spazio bianco, tabulazione e nuova linea)."
+msgstr "(l'insieme predefinito è spazio bianco, tabulazione e nuova linea)."
 
 #: options.c:78
 msgid ""
-"If IFS is prefixed with 1: or 2: then use the given delimiter set\n"
+"If IFS is prefixed with 1: or 2:, use the given delimiter set\n"
 "    only for the lines from the first or the second file respectively"
 msgstr ""
-"Se IFS è preceduto dal prefisso 1: o da 2: allora usa l'insieme di\n"
-"    caratteri specificato solo per le linee del primo ovvero del secondo file"
+"Se IFS è preceduto dal prefisso 1: o da 2:, usa l'insieme di\n"
+"    separatori specificato solo per le linee del primo ovvero del secondo "
+"file"
 
 #: options.c:80
 msgid ""
@@ -637,21 +655,22 @@ msgstr ""
 
 #: options.c:82
 msgid ""
-"If DELIMS is prefixed with 1: or 2: then use the given delimiter set\n"
+"If DELIMS is prefixed with 1: or 2:, use the given delimiter set\n"
 "    only for the lines from the first or the second file respectively"
 msgstr ""
-"Se DELIMS è preceduto dal prefisso 1: o da 2: allora usa l'insieme di\n"
-"    stringhe specificato solo per le linee del primo ovvero del secondo file"
+"Se DELIMS è preceduto dal prefisso 1: o da 2:, usa l'insieme di\n"
+"    separatori specificato solo per le linee del primo ovvero del secondo "
+"file"
 
 #: options.c:84
 msgid ""
 "Set to THRVAL the maximum absolute difference permitted\n"
-"    before that two numeric fields are regarded as different\n"
+"    before two numeric fields are regarded as different\n"
 "    (The default value is zero)."
 msgstr ""
 "Imposta al valore THRVAL la massima differenza assoluta consentita\n"
 "    prima che due campi numerici siano considerati diversi\n"
-"    (Il valore predefinito è zero)."
+"    (il valore predefinito è zero)."
 
 #: options.c:85 options.c:89
 msgid ""
@@ -668,28 +687,28 @@ msgid ""
 "    lying in RANGE1 with the corresponding field of FILE2 in RANGE2"
 msgstr ""
 "Se sono dati sia RANGE1 che RANGE2 ed hanno la stessa lunghezza,\n"
-"    usa il valore di soglia specificato quando confronti un campo di FILE1\n"
+"    usa il valore di soglia specificato solo per confrontare un campo di FILE1\n"
 "    che cade in RANGE1 con il corrispondente campo di FILE2 in RANGE2"
 
 #: options.c:88
 msgid ""
 "Set to THRVAL the maximum relative difference permitted\n"
-"    before that two numeric fields are regarded as different\n"
+"    before two numeric fields are regarded as different\n"
 "    (The default value is zero)."
 msgstr ""
 "Imposta al valore THRVAL la massima differenza relativa consentita\n"
 "    prima che due campi numerici siano considerati diversi\n"
-"    (Il valore predefinito è zero)."
+"    (il valore predefinito è zero)."
 
 #: options.c:92
 msgid ""
 "Consider two numerical values as equal only if\n"
 "    both absolute and relative difference do not exceed\n"
-"    the corresponding tolerance threshold"
+"    the respective tolerance threshold"
 msgstr ""
 "Considera due campi numerici come uguali solo se\n"
 "    la differenza assoluta e quella relativa sono entrambe dentro\n"
-"    la corrispondente soglia di tolleranza"
+"    la rispettiva soglia di tolleranza"
 
 #: options.c:94
 msgid "Use the formula indicated by NUM to compute the relative errors."
@@ -810,7 +829,7 @@ msgid ""
 "Specify the characters representing the imaginary unit\n"
 "    in the two files to compare"
 msgstr ""
-"Specifica i caratteri rappresentanti l' unità immaginaria\n"
+"Specifica i caratteri rappresentanti l'unità immaginaria\n"
 "    nei due file da confrontare"
 
 #: options.c:124
@@ -863,22 +882,22 @@ msgstr ""
 "Stampa un elenco a colonne affiancate delle differenze tra i due file,\n"
 "    mostrando quali linee sono presenti solo in un file, quali linee\n"
 "    sono presenti in entrambi i file ma con uno o più campi differenti\n"
-"    e quali sono identiche."
+"    e quali linee sono identiche."
 
-#: options.c:137 options.c:158
+#: options.c:137 options.c:160
 msgid ""
 "If 'NUM' is zero or is not specified, output at most 130 columns per line."
 msgstr ""
 "Se 'NUM' è zero o non è specificato, visualizza al più\n"
 "    130 colonne per linea."
 
-#: options.c:138 options.c:159
+#: options.c:138 options.c:161
 msgid "If 'NUM' is a positive number, output at most 'NUM' columns per line."
 msgstr ""
 "Se 'NUM' è un numero positivo, visualizza al più\n"
 "    'NUM' colonne per linea."
 
-#: options.c:139 options.c:160
+#: options.c:139 options.c:162
 msgid ""
 "If 'NUM' is a negative number, do not output common lines\n"
 "    and display at most -'NUM' columns per line."
@@ -887,42 +906,50 @@ msgstr ""
 "    ai due file e visualizza al più -'NUM' colonne per linea."
 
 #: options.c:141
+msgid ""
+"Display the differences between the two compared files\n"
+"    in raw format (not very convenient for humans)"
+msgstr ""
+"Visualizza in formato `raw' le differenze tra i due file\n"
+"    confrontati (non molto adatto per gli esseri umani)"
+
+#: options.c:143
 msgid "Suppress all the standard output"
 msgstr "Sopprimi completamente l'output standard del programma"
 
-#: options.c:143
+#: options.c:145
 msgid "Add some statistics to the standard output"
 msgstr "Aggiungi alcune informazioni di tipo statistico all'output standard"
 
-#: options.c:145
+#: options.c:147
 msgid ""
 "Select the fields of the first file that have to be\n"
 "    blurred during the synchronization procedure\n"
 "    only if they turn out to be numeric"
 msgstr ""
 "Seleziona i campi del primo file che devono essere\n"
-"    offuscati durante la procedura di sincronizzazione\n"
-"    quando risultano essere di tipo numerico"
-
-#: options.c:147
-msgid ""
-"Select the fields of the second file that have to be\n"
-"    blurred during the synchronization procedure\n"
-"    only if they turn out to be numeric"
-msgstr ""
-"Seleziona i campi del secondo file che devono essere\n"
 "    offuscati durante la procedura di sincronizzazione\n"
 "    quando risultano essere di tipo numerico"
 
 #: options.c:149
 msgid ""
+"Select the fields of the second file that have to be\n"
+"    blurred during the synchronization procedure\n"
+"    only if they turn out to be numeric"
+msgstr ""
+"Seleziona i campi del secondo file che devono essere\n"
+"    offuscati durante la procedura di sincronizzazione\n"
+"    quando risultano essere di tipo numerico"
+
+#: options.c:151
+msgid ""
 "Select the fields of the first file that have to be\n"
 "    unconditionally blurred during the synchronization procedure"
 msgstr ""
 "Seleziona i campi del primo file che devono essere\n"
 "    sempre offuscati durante la procedura di sincronizzazione"
 
-#: options.c:151
+#: options.c:153
 msgid ""
 "Select the fields of the second file that have to be\n"
 "    unconditionally blurred during the synchronization procedure"
@@ -930,13 +957,13 @@ msgstr ""
 "Seleziona i campi del secondo file che devono essere\n"
 "    sempre offuscati durante la procedura di sincronizzazione"
 
-#: options.c:153
+#: options.c:155
 msgid "During synchronization try hard to find a smaller set of changes"
 msgstr ""
 "Durante la sincronizzazione cerca ad ogni costo di trovare\n"
 "    una catena minimale di modifiche"
 
-#: options.c:155
+#: options.c:157
 msgid ""
 "During synchronization assume large files and\n"
 "    many scattered small changes"
@@ -944,7 +971,7 @@ msgstr ""
 "Durante la sincronizzazione assumi di lavorare su file grandi\n"
 "    con tante piccole differenze sparpagliate"
 
-#: options.c:157
+#: options.c:159
 msgid ""
 "Run only the filter and then show the results of its\n"
 "    attempt to synchronize the two files."
@@ -952,7 +979,7 @@ msgstr ""
 "Esegui solo il filtraggio e quindi mostra i risultati del\n"
 "    suo tentativo di sincronizzare i due file."
 
-#: options.c:162
+#: options.c:164
 msgid ""
 "Expand tabs to spaces in output while displaying the results of the\n"
 "    synchronization procedure (meaningful only together with option -O or -f)"
@@ -960,31 +987,31 @@ msgstr ""
 "Espandi le tabulazioni a spazi bianchi mentre stampi i risultati della\n"
 "    procedura di sincronizzazione (utile solo con le opzioni -O e -f)"
 
-#: options.c:164
+#: options.c:166
 msgid "Treat both files as binary files (only meaningful under Doz/Windoz)"
 msgstr "Tratta entrambi i file come binari (utile solo sotto Doz/Windoz)"
 
-#: options.c:166
+#: options.c:168
 msgid "Redirect warning and error messages from stderr to the indicated file"
 msgstr ""
 "Reindirizza avvertimenti e messaggi di errore\n"
 "    dallo standard error (schermo)  al file indicato"
 
-#: options.c:168
+#: options.c:170
 msgid "Redirect output from stdout to the indicated file"
 msgstr "Reindirizza l'output dallo standard output (schermo)  al file indicato"
 
-#: options.c:169
+#: options.c:171
 msgid "Show help message and predefined settings"
 msgstr "Mostra questo messaggio di aiuto e le impostazioni predefinite"
 
-#: options.c:170
+#: options.c:172
 msgid "Show version number, Copyright, Distribution Terms and NO-Warranty"
 msgstr ""
-"Mostra numero di versione, Copyright,\n"
+"Mostra numero di versione, copyright,\n"
 "    termini di distribuzione e NON-Garanzia"
 
-#: options.c:172
+#: options.c:174
 msgid ""
 "\n"
 "  Default numeric format (for both files to compare):\n"
@@ -992,42 +1019,42 @@ msgstr ""
 "\n"
 "  Formato numerico predefinito (per entrambi i file da confrontare):\n"
 
-#: options.c:173
+#: options.c:175
 #, c-format
 msgid "Currency name = \"%s\"\n"
 msgstr "Nome della valuta = \"%s\"\n"
 
-#: options.c:174
+#: options.c:176
 #, c-format
 msgid "Decimal point = `%c'\n"
 msgstr "Punto decimale = `%c'\n"
 
-#: options.c:176 options.c:955 options.c:986
+#: options.c:178 options.c:931 options.c:962
 #, c-format
 msgid "Thousands separator = `%c'\n"
 msgstr "Separatore delle migliaia = `%c'\n"
 
-#: options.c:177
+#: options.c:179
 #, c-format
 msgid "Number of digits in each thousands group = %u\n"
 msgstr "Numero di cifre in ogni gruppo di migliaia = %u\n"
 
-#: options.c:179 options.c:956 options.c:987
+#: options.c:181 options.c:932 options.c:963
 #, c-format
 msgid "Leading positive sign = `%c'\n"
 msgstr "Segno iniziale per numeri positivi = `%c'\n"
 
-#: options.c:180 options.c:957 options.c:988
+#: options.c:182 options.c:933 options.c:964
 #, c-format
 msgid "Leading negative sign = `%c'\n"
 msgstr "Segno iniziale per numeri negativi = `%c'\n"
 
-#: options.c:181 options.c:958 options.c:989
+#: options.c:183 options.c:934 options.c:965
 #, c-format
 msgid "Prefix for decimal exponent = `%c'\n"
 msgstr "Prefisso per esponente decimale = `%c'\n"
 
-#: options.c:182 options.c:961 options.c:992
+#: options.c:184 options.c:937 options.c:968
 #, c-format
 msgid ""
 "Symbol used to denote the imaginary unit = `%c'\n"
@@ -1036,25 +1063,25 @@ msgstr ""
 "Simbolo usato per indicare l'unità immaginaria = `%c'\n"
 "\n"
 
-#: options.c:467 options.c:513 options.c:528 options.c:545 options.c:560
-#: options.c:582 options.c:804 options.c:831 options.c:874 options.c:889
+#: options.c:429 options.c:476 options.c:491 options.c:508 options.c:523
+#: options.c:546 options.c:769 options.c:797 options.c:840 options.c:855
 #, c-format
 msgid "%s: invalid argument after `-%c' option\n"
 msgstr "%s: un argomento non valido segue l'opzione `-%c'\n"
 
-#: options.c:600 options.c:614 options.c:634 options.c:667 options.c:681
-#: options.c:701
+#: options.c:564 options.c:578 options.c:598 options.c:631 options.c:645
+#: options.c:665
 #, c-format
 msgid "%s: memory exhausted\n"
 msgstr "%s: memoria esaurita\n"
 
-#: options.c:642 options.c:708 options.c:726 options.c:733 options.c:745
-#: options.c:752 options.c:789
+#: options.c:606 options.c:672 options.c:690 options.c:697 options.c:709
+#: options.c:716 options.c:753
 #, c-format
 msgid "%s: invalid argument after `-%c' option:\n"
 msgstr "%s: un argomento non valido segue l'opzione `-%c':\n"
 
-#: options.c:644
+#: options.c:608
 #, c-format
 msgid ""
 "  The list of field delimiters can not be empty and\n"
@@ -1063,7 +1090,7 @@ msgstr ""
 "  La lista di separatori di campo non può essere vuota\n"
 "  e deve sempre includere il carattere di nuova linea ('\\n')\n"
 
-#: options.c:710
+#: options.c:674
 #, c-format
 msgid ""
 "  The list of field delimiters cannot be empty and\n"
@@ -1076,32 +1103,32 @@ msgstr ""
 "  Inoltre, il carattere di nuova linea non può\n"
 "  apparire in alcun altro separatore di campo\n"
 
-#: options.c:728 options.c:747
+#: options.c:692 options.c:711
 #, c-format
 msgid "  The format specification has not been respected\n"
 msgstr "  La specifica di formato non è stata rispettata\n"
 
-#: options.c:735 options.c:754
+#: options.c:699 options.c:718
 #, c-format
 msgid "  The specified ranges do not have the same length\n"
 msgstr "  Gli intervalli specificati non hanno la stessa lunghezza\n"
 
-#: options.c:791
+#: options.c:755
 #, c-format
 msgid "  you have missed to specify the currency name\n"
 msgstr "  hai dimenticato di specificare il nome della valuta\n"
 
-#: options.c:900 options.c:909
+#: options.c:866 options.c:876
 #, c-format
 msgid "%s: cannot open file \"%s\":\n"
 msgstr "%s: impossibile aprire il file \"%s\":\n"
 
-#: options.c:951
+#: options.c:927
 #, c-format
 msgid "The numeric format specified for the first file is illegal,\n"
 msgstr "Il formato numerico specificato per il primo file è inaccettabile,\n"
 
-#: options.c:953 options.c:984
+#: options.c:929 options.c:960
 #, c-format
 msgid ""
 "the following symbols should be all different\n"
@@ -1110,7 +1137,7 @@ msgstr ""
 "i simboli seguenti dovrebbero essere tutti diversi\n"
 "mentre due o più di essi sono in realtà uguali:\n"
 
-#: options.c:954 options.c:985
+#: options.c:930 options.c:961
 #, c-format
 msgid ""
 "\n"
@@ -1119,37 +1146,37 @@ msgstr ""
 "\n"
 "Punto decimale = `%c'\n"
 
-#: options.c:968
+#: options.c:944
 #, c-format
 msgid "The numeric format specified for the first file is illegal:\n"
 msgstr "Il formato numerico specificato per il primo file è inaccettabile:\n"
 
-#: options.c:970 options.c:1001
+#: options.c:946 options.c:977
 #, c-format
 msgid "the name of the currency may not contain digits,\n"
 msgstr "il nome della valuta non può contenere cifre numeriche,\n"
 
-#: options.c:972 options.c:1003
+#: options.c:948 options.c:979
 #, c-format
 msgid "the symbol for the leading positive sign (`%c'),\n"
 msgstr "il prefisso per numeri positivi (`%c'),\n"
 
-#: options.c:974 options.c:1005
+#: options.c:950 options.c:981
 #, c-format
 msgid "the symbol for the leading negative sign (`%c'),\n"
 msgstr "il prefisso per numeri negativi (`%c'),\n"
 
-#: options.c:976 options.c:1007
+#: options.c:952 options.c:983
 #, c-format
 msgid "the decimal point (`%c'), or the thousands separator (`%c')\n"
 msgstr "il punto decimale (`%c'), o il separatore delle migliaia (`%c')\n"
 
-#: options.c:982
+#: options.c:958
 #, c-format
 msgid "The numeric format specified for the second file is illegal,\n"
 msgstr "Il formato numerico specificato per il secondo file è inaccettabile,\n"
 
-#: options.c:999
+#: options.c:975
 #, c-format
 msgid "The numeric format specified for the second file is illegal:\n"
 msgstr "Il formato numerico specificato per il secondo file è inaccettabile:\n"

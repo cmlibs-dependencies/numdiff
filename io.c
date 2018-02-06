@@ -1,7 +1,7 @@
 /*
     Numdiff - compare putatively similar files, 
     ignoring small numeric differences
-    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  Ivano Primi  <ivprimi@libero.it>
+    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Ivano Primi  <ivprimi@libero.it>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -122,13 +122,23 @@ void print_fields (const char* field1, const char* field2,
     }
 }
 
-void print_errors (Real abserr, Real relerr)
+void print_errors (Real abserr, Real relerr, int human_readable_format)
 {
-  fputs (_("@ Absolute error = "), stdout);
-  printno (abserr, DEF_LIM);
-  fputs (_(", Relative error = "), stdout);
-  printno (relerr, DEF_LIM); 
-  putchar ('\n');
+  if ((human_readable_format))
+    {
+      fputs (_("@ Absolute error = "), stdout);
+      printno (abserr, DEF_LIM);
+      fputs (_(", Relative error = "), stdout);
+      printno (relerr, DEF_LIM); 
+      putchar ('\n');
+    }
+  else
+    {
+      printno (abserr, DEF_LIM);
+      fputc (':', stdout);
+      printno (relerr, DEF_LIM);
+      fputc (':', stdout);      
+    }
 }
 
 void print_separator (void)

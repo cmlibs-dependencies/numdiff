@@ -1,7 +1,7 @@
 /*
     Numdiff - compare putatively similar files, 
     ignoring small numeric differences
-    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  Ivano Primi  <ivprimi@libero.it>
+    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Ivano Primi  <ivprimi@libero.it>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
 void print_version (const char* progname)
 {
   printf ("%s %s\n", progname, VERSION);
-  printf ("Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  %s <ivprimi@libero.it>\n", 
+  printf ("Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  %s <ivprimi@libero.it>\n", 
 	  /* TRANSLATORS: This is a proper name.  See the gettext
 	     manual, section Names.
 	     Pronounciation is like "evaa-no pree-me".  */
@@ -63,7 +63,7 @@ void print_help (const char* progname)
 {
   puts (_("Usage:"));
   printf ("%s -h|--help|-v|--version   %s\n\n", progname, _("or"));
-  printf ("%s %s\n", progname, "[-s IFS][-D DELIMS][-a THRVAL[:RANGE|:RANGE1:RANGE2]][-r THRVAL[:RANGE|:RANGE1:RANGE2]][-2][-F NUM][-# NUM][-P][-N][-I][-c CURRNAME][-d C1C2][-t C1C2][-g N1N2][-p C1C2][-n C1C2][-e C1C2][-i C1C2][-X 1:RANGE][-X 2:RANGE][-E][-U][-b][-V][-O[NUM]][-q][-S][-z 1:RANGE][-z 2:RANGE][-Z 1:RANGE][-Z 2:RANGE][-m][-H][-f[NUM]][-T][-B][-l PATH][-o PATH] FILE1 FILE2");
+  printf ("%s %s\n", progname, "[-s IFS][-D DELIMS][-a THRVAL[:RANGE|:RANGE1:RANGE2]][-r THRVAL[:RANGE|:RANGE1:RANGE2]][-2][-F NUM][-# NUM][-P][-N][-I][-c CURRNAME][-d C1C2][-t C1C2][-g N1N2][-p C1C2][-n C1C2][-e C1C2][-i C1C2][-X 1:RANGE][-X 2:RANGE][-E][-U][-b][-V][-O[NUM]][--raw][-q][-S][-z 1:RANGE][-z 2:RANGE][-Z 1:RANGE][-Z 2:RANGE][-m][-H][-f[NUM]][-T][-B][-l PATH][-o PATH] FILE1 FILE2");
   printf (_("\nCompare putatively similar files line by line and field by field,\nignoring small numeric differences or/and different numeric formats.\n\n"));
   printf (_("RANGE, RANGE1 and RANGE2 stay for a positive integer value or\nfor a range of integer values, like 1-, 3-5 or -7.\n"));
   printf ("%s\n%s\n%s\n\n%s\n\n",
@@ -75,21 +75,21 @@ void print_help (const char* progname)
   printf ("-s, --separators=IFS\n    %s\n    %s\n    %s\n",
 	  _("Specify the set of characters to use as delimiters\n    while splitting the input lines into fields"),
 	  _("(The default set of delimiters is space, tab and newline)."),
-	  _("If IFS is prefixed with 1: or 2: then use the given delimiter set\n    only for the lines from the first or the second file respectively"));
+	  _("If IFS is prefixed with 1: or 2:, use the given delimiter set\n    only for the lines from the first or the second file respectively"));
   printf ("-D, --delimiters=DELIMS\n    %s\n    %s\n    %s\n",
 	  _("Specify the set of strings to use as delimiters\n    while splitting the input lines into fields"),
 	  _("(The default set of delimiters is space, tab and newline)."),
-	  _("If DELIMS is prefixed with 1: or 2: then use the given delimiter set\n    only for the lines from the first or the second file respectively"));
+	  _("If DELIMS is prefixed with 1: or 2:, use the given delimiter set\n    only for the lines from the first or the second file respectively"));
   printf ("-a, --absolute-tolerance=THRVAL[:RANGE|:RANGE1:RANGE2]\n    %s\n    %s\n    %s\n", 
-	  _("Set to THRVAL the maximum absolute difference permitted\n    before that two numeric fields are regarded as different\n    (The default value is zero)."),
+	  _("Set to THRVAL the maximum absolute difference permitted\n    before two numeric fields are regarded as different\n    (The default value is zero)."),
 	  _("If a RANGE is given, use the specified\n    threshold only when comparing fields whose positions lie in RANGE."),
 	  _("If both RANGE1 and RANGE2 are given and have the same length,\n    then use the specified threshold when comparing a field of FILE1\n    lying in RANGE1 with the corresponding field of FILE2 in RANGE2"));
   printf ("-r, --relative-tolerance=THRVAL[:RANGE|:RANGE1:RANGE2]\n    %s\n    %s\n    %s\n", 
-	  _("Set to THRVAL the maximum relative difference permitted\n    before that two numeric fields are regarded as different\n    (The default value is zero)."),
+	  _("Set to THRVAL the maximum relative difference permitted\n    before two numeric fields are regarded as different\n    (The default value is zero)."),
 	  _("If a RANGE is given, use the specified\n    threshold only when comparing fields whose positions lie in RANGE."),
 	  _("If both RANGE1 and RANGE2 are given and have the same length,\n    then use the specified threshold when comparing a field of FILE1\n    lying in RANGE1 with the corresponding field of FILE2 in RANGE2"));
   printf ("-2, --strict\n    %s\n",
-	  _("Consider two numerical values as equal only if\n    both absolute and relative difference do not exceed\n    the corresponding tolerance threshold"));
+	  _("Consider two numerical values as equal only if\n    both absolute and relative difference do not exceed\n    the respective tolerance threshold"));
   printf ("-F, --formula=NUM\n    %s\n    %s\n    %s\n    %s\n",
 	  _("Use the formula indicated by NUM to compute the relative errors."),
 	  _("If \'NUM\' is 0 use the classic formula."),
@@ -137,6 +137,8 @@ void print_help (const char* progname)
 	  _("If \'NUM\' is zero or is not specified, output at most 130 columns per line."),
 	  _("If \'NUM\' is a positive number, output at most \'NUM\' columns per line."),
 	  _("If \'NUM\' is a negative number, do not output common lines\n    and display at most -\'NUM\' columns per line."));
+  printf ("--raw\n    %s\n",
+	  _("Display the differences between the two compared files\n    in raw format (not very convenient for humans)"));
   printf ("-q, --quiet, --silent\n    %s\n",
 	  _("Suppress all the standard output"));
   printf ("-S, --statistics\n    %s\n",
@@ -194,7 +196,7 @@ int nfset (int opt_ch, const char* opt_arg, argslist* arg_list)
 	case 'd':
 	  if ( (is_punct(_1st)) && (_2nd == '\0' || is_punct(_2nd)) )
 	    {
-	      arg_list->optmask |= _D_MASK;
+	      setBitAtPosition (&arg_list->optmask, _D_MASK, BIT_ON);      
 	      arg_list->nf1.dp = _1st;
 	      arg_list->nf2.dp = (_2nd) ? _2nd : _1st; 
 	      return 0;
@@ -203,7 +205,7 @@ int nfset (int opt_ch, const char* opt_arg, argslist* arg_list)
 	case 't':
 	  if ( (is_punct(_1st)) && (_2nd == '\0' || is_punct(_2nd)) )
 	    {
-	      arg_list->optmask |= _T_MASK;
+	      setBitAtPosition (&arg_list->optmask, _T_MASK, BIT_ON);      
 	      arg_list->nf1.thsep = _1st;
 	      arg_list->nf2.thsep = (_2nd) ? _2nd : _1st;
 	      return 0;
@@ -212,7 +214,7 @@ int nfset (int opt_ch, const char* opt_arg, argslist* arg_list)
 	case 'e':
 	  if ( is_print(_1st) && (_2nd == '\0' || is_print(_2nd)) )
 	    {
-	      arg_list->optmask |= _E_MASK;
+	      setBitAtPosition (&arg_list->optmask, _E_MASK, BIT_ON);      
 	      arg_list->nf1.ech = _1st;
 	      arg_list->nf2.ech = (_2nd) ? _2nd : _1st;
 	      return 0;
@@ -221,7 +223,7 @@ int nfset (int opt_ch, const char* opt_arg, argslist* arg_list)
 	case 'n':
 	  if ( is_print(_1st) && (_2nd == '\0' || is_print(_2nd)) )
 	    {
-	      arg_list->optmask |= _N_MASK;
+	      setBitAtPosition (&arg_list->optmask, _N_MASK, BIT_ON);      
 	      arg_list->nf1.neg_sign = _1st;
 	      arg_list->nf2.neg_sign = (_2nd) ? _2nd : _1st;
 	      return 0;
@@ -230,7 +232,7 @@ int nfset (int opt_ch, const char* opt_arg, argslist* arg_list)
 	case 'i':
 	  if ( is_print(_1st) && (_2nd == '\0' || is_print(_2nd)) )
 	    {
-	      arg_list->optmask |= _I_MASK;
+	      setBitAtPosition (&arg_list->optmask, _I_MASK, BIT_ON);      
 	      arg_list->nf1.iu = _1st;
 	      arg_list->nf2.iu = (_2nd) ? _2nd : _1st;
 	      return 0;
@@ -239,7 +241,7 @@ int nfset (int opt_ch, const char* opt_arg, argslist* arg_list)
 	case 'p':
 	  if ( is_print(_1st) && (_2nd == '\0' || is_print(_2nd)) )
 	    {
-	      arg_list->optmask |= _P_MASK;
+	      setBitAtPosition (&arg_list->optmask, _P_MASK, BIT_ON);      
 	      arg_list->nf1.pos_sign = _1st;
 	      arg_list->nf2.pos_sign = (_2nd) ? _2nd : _1st;
 	      return 0;
@@ -248,7 +250,7 @@ int nfset (int opt_ch, const char* opt_arg, argslist* arg_list)
 	case 'g':
 	  if ( (is_digit(_1st)) && (_2nd == '\0' || is_digit(_2nd)) )
 	    {
-	      arg_list->optmask |= _G_MASK;
+	      setBitAtPosition (&arg_list->optmask, _G_MASK, BIT_ON);     
 	      arg_list->nf1.grouping = _1st - '0';
 	      arg_list->nf2.grouping = (_2nd) ? _2nd - '0': _1st - '0';
 	      return 0;
@@ -393,69 +395,29 @@ int setargs (int argc, char* argv[], argslist *list)
     {"exclude",              1, NULL, 'X'},
     {"warnings-to",          1, NULL, 'l'},
     {"output",               1, NULL, 'o'},
+    {"raw",                  0, NULL, 1000},
     {"version",              0, NULL, 'v'},
     {0, 0, 0, 0}
   };
   int option_index=0;
   char *tail;
-  int i, optch, off, rv; 
+  int cmpRes, optch, off, rv; 
   unsigned int t, file_id;
-  long w;
+  long w = DEF_ATMOST_NCOLS;
   unsigned char *bitmask;  
-
-  /*
-    We start by loading the default values
-    for the user settable options.
-
-    The initialization of the variables
-
-    list->maxrelerr, list->maxabserr,
-    list->Labserr, list->Crelerr, list->Lrelerr, list->Cabserr,
-    list->N1abserr, list->N1disperr, list->N2abserr, list->N2disperr 
-
-    is done within main() through init_mpa_support().
-  */
-
-  binary = 0;
-  suppress_common_lines = 0;
-  ignore_white_space = IGNORE_NO_WHITE_SPACE;
-  expand_tabs = 0;
-  w = DEF_ATMOST_NCOLS;
-  speed_large_files = 0;
-  program_name = PACKAGE;
-
-  list->optmask = 0x0;
-  list->output_mode = OUTMODE_NORMAL;
-  for (i=0; i < FIELDMASK_SIZE; 
-       list->ghostmask1[i] = list->ghostmask2[i] = list->tblurmask1[i] = list->tblurmask2[i] = list->pblurmask1[i] = list->pblurmask2[i] = 0x0, i++); 
-  list->relerr_formula = CLASSIC_FORMULA;
-  list->Nentries = list->Ndisperr = 0;
-  list->flag = 0;
-  list->ifs1 = list->ifs2 = NULL;
-  list->iscale = ISCALE;
-  list->nf1.dp = DP;
-  list->nf1.thsep = THSEP;
-  list->nf1.grouping = GROUPING;
-  list->nf1.pos_sign = POS_SIGN;
-  list->nf1.neg_sign = NEG_SIGN;
-  list->nf1.ech = ECH;
-  list->nf1.iu = IU;
-  list->file1 = list->file2 = NULL;
-  list->nf2 = list->nf1;
-  list->nf1.currency = get_separating_string (CURRENCY);
-  list->nf2.currency = get_separating_string (CURRENCY);
 
   while ( (optch = getopt_long (argc, argv, optstring, long_options, &option_index)) != -1 )
     {
       switch (optch)
 	{
 	case 'h':
-	  list->optmask |= _H_MASK;
+	  setBitAtPosition (&list->optmask, _H_MASK, BIT_ON);
 	  break;
 	case '2':
-	  list->optmask |= _2_MASK;
+	  setBitAtPosition (&list->optmask, _2_MASK, BIT_ON);	  
 	  break;	  
 	case 'F':
+	  setBitAtPosition (&list->optmask, _SF_MASK, BIT_ON);	  
 	  if (strncmp ("0", optarg, 1) == 0)
 	    list->relerr_formula = CLASSIC_FORMULA;	      
 	  else if (strncmp ("1", optarg, 1) == 0)
@@ -470,39 +432,40 @@ int setargs (int argc, char* argv[], argslist *list)
 	    }
 	  break;
 	case 'b':
-	  list->optmask |= _B_MASK;
+	  setBitAtPosition (&list->optmask, _B_MASK, BIT_ON);	  
 	  break;
 	case 'B':
+	  setBitAtPosition (&list->optmask, _SB_MASK, BIT_ON);	  
 	  binary = 1;
 	  break;
 	case 'V':
-	  list->optmask |= _SV_MASK;
+	  setBitAtPosition (&list->optmask, _SV_MASK, BIT_ON);	  
 	  break;
 	case 'q':
-	  list->optmask |= _Q_MASK;
+	  setBitAtPosition (&list->optmask, _Q_MASK, BIT_ON);	  
 	  break;
 	case 'U':
-	  list->optmask |= _SU_MASK;
+	  setBitAtPosition (&list->optmask, _SU_MASK, BIT_ON);
 	  break;
 	case 'E':
-	  list->optmask |= _SE_MASK;
+	  setBitAtPosition (&list->optmask, _SE_MASK, BIT_ON);
 	  break;
 	case 'S':
-	  list->optmask |= _SS_MASK;
+	  setBitAtPosition (&list->optmask, _SS_MASK, BIT_ON);
 	  break;
 	case 'I':
-	  list->optmask |= _SI_MASK;
+	  setBitAtPosition (&list->optmask, _SI_MASK, BIT_ON);	  
 	  break;
 	case 'P':
-	  list->optmask |= _SP_MASK;
+	  setBitAtPosition (&list->optmask, _SP_MASK, BIT_ON);	  
 	  list->flag = 1;
 	  break;
 	case 'N':
-	  list->optmask |= _SN_MASK;
+	  setBitAtPosition (&list->optmask, _SN_MASK, BIT_ON);	  
 	  list->flag = -1;
 	  break;
 	case 'z':
-	  if ( (i = strncmp (optarg, "1:", 2)) && (strncmp (optarg, "2:", 2)) )
+	  if ( (cmpRes = strncmp (optarg, "1:", 2)) && (strncmp (optarg, "2:", 2)) )
 	    {
 	      /*
 		None of the prefixes 1: and 2: has been used,
@@ -517,12 +480,12 @@ int setargs (int argc, char* argv[], argslist *list)
 	      else
 		{
 		  fselect (optarg, list->pblurmask2, mask_size);
-		  list->optmask |= _Z_MASK;
+		  setBitAtPosition (&list->optmask, _Z_MASK, BIT_ON);
 		}
 	    }
 	  else 
 	    {
-	      bitmask = i == 0 ? list->pblurmask1 : list->pblurmask2;
+	      bitmask = (cmpRes == 0 ? list->pblurmask1 : list->pblurmask2);
 	      if (fselect (optarg+2, bitmask, mask_size) <= 0)
 		{
 		  fprintf (stderr, _("%s: invalid argument after `-%c\' option\n"),
@@ -530,11 +493,11 @@ int setargs (int argc, char* argv[], argslist *list)
 		  return -1;
 		}
 	      else
-		list->optmask |= _Z_MASK;
+		setBitAtPosition (&list->optmask, _Z_MASK, BIT_ON);
 	    }
 	  break;
 	case 'Z':
-	  if ( (i = strncmp (optarg, "1:", 2)) && (strncmp (optarg, "2:", 2)) )
+	  if ( (cmpRes = strncmp (optarg, "1:", 2)) && (strncmp (optarg, "2:", 2)) )
 	    {
 	      /*
 		None of the prefixes 1: and 2: has been used,
@@ -549,12 +512,12 @@ int setargs (int argc, char* argv[], argslist *list)
 	      else
 		{
 		  fselect (optarg, list->tblurmask2, mask_size);
-		  list->optmask |= _SZ_MASK;
+		  setBitAtPosition (&list->optmask, _SZ_MASK, BIT_ON);  
 		}
 	    }
 	  else 
 	    {
-	      bitmask = i == 0 ? list->tblurmask1 : list->tblurmask2;
+	      bitmask = (cmpRes == 0 ? list->tblurmask1 : list->tblurmask2);
 	      if (fselect (optarg+2, bitmask, mask_size) <= 0)
 		{
 		  fprintf (stderr, _("%s: invalid argument after `-%c\' option\n"),
@@ -562,17 +525,18 @@ int setargs (int argc, char* argv[], argslist *list)
 		  return -1;
 		}
 	      else
-		list->optmask |= _SZ_MASK;
+		setBitAtPosition (&list->optmask, _SZ_MASK, BIT_ON);
 	    }
 	  break;
 	case 'm':
-	  list->optmask |= _M_MASK;
+	  setBitAtPosition (&list->optmask, _M_MASK, BIT_ON);	  
 	  break;
 	case 'H':
-	  list->optmask |= _SH_MASK;
+	  setBitAtPosition (&list->optmask, _SH_MASK, BIT_ON);	  
 	  speed_large_files = 1;
 	  break;
 	case 'T':
+	  setBitAtPosition (&list->optmask, _ST_MASK, BIT_ON);	  
 	  expand_tabs = 1;
 	  break;
 	case '#':
@@ -584,7 +548,7 @@ int setargs (int argc, char* argv[], argslist *list)
 	      return -1;
 	    }
 	  else
-	    list->optmask |= _X_MASK;	  
+	    setBitAtPosition (&list->optmask, _X_MASK, BIT_ON);	    
 	  break;
 	case 's':
 	  if (*optarg == '1' && *(optarg+1) == ':')
@@ -649,8 +613,8 @@ int setargs (int argc, char* argv[], argslist *list)
               remove_duplicates_from_string_vector (list->ifs1);
               remove_duplicates_from_string_vector (list->ifs2);
               sort_string_vector (list->ifs1); /* This is not strictly necessary */
-              sort_string_vector (list->ifs2); /* This is not strictly necessary */              
-              list->optmask |= _S_MASK;
+              sort_string_vector (list->ifs2); /* This is not strictly necessary */
+	      setBitAtPosition (&list->optmask, _S_MASK, BIT_ON);      
             }
 	  break;
         case 'D':
@@ -715,8 +679,8 @@ int setargs (int argc, char* argv[], argslist *list)
               remove_duplicates_from_string_vector (list->ifs1);
               remove_duplicates_from_string_vector (list->ifs2);
               sort_string_vector (list->ifs1); 
-              sort_string_vector (list->ifs2); 
-              list->optmask |= _S_MASK;
+              sort_string_vector (list->ifs2);
+	      setBitAtPosition (&list->optmask, _SD_MASK, BIT_ON);      
             }
           break;
 	case 'a':
@@ -736,7 +700,7 @@ int setargs (int argc, char* argv[], argslist *list)
 	      return -1;
 	    }
 	  else
-	    list->optmask |= _A_MASK;
+	    setBitAtPosition (&list->optmask, _A_MASK, BIT_ON);	    
 	  break;
 	case 'r':
 	  rv = thrlist_add (&list->maxrelerr, optarg);
@@ -755,7 +719,7 @@ int setargs (int argc, char* argv[], argslist *list)
 	      return -1;
 	    }
 	  else
-	    list->optmask |= _R_MASK;
+	    setBitAtPosition (&list->optmask, _R_MASK, BIT_ON);	    
 	  break;
 	case 'c':
 	  file_id = 0x0;
@@ -791,6 +755,7 @@ int setargs (int argc, char* argv[], argslist *list)
 	      fprintf (stderr, _("  you have missed to specify the currency name\n"));
 	      return -1;
 	    }
+	  setBitAtPosition (&list->optmask, _C_MASK, BIT_ON);
 	  break;
 	case 'd':
 	case 't':
@@ -808,16 +773,17 @@ int setargs (int argc, char* argv[], argslist *list)
 	  break;
 	case 'f':
 	case 'O':
-	  if (!(list->optmask & (_F_MASK | _SO_MASK)))
+	  if (getBitAtPosition (&list->optmask, _F_MASK) == BIT_OFF &&
+	      getBitAtPosition (&list->optmask, _SO_MASK) == BIT_OFF)
 	    {
 	      if(!optarg)
 		{
 		  /* There is no optional argument, then set */
 		  /* 'w' to 'DEF_ATMOST_NCOLS'.              */
 		  if (optch == 'f')
-		    list->optmask |= _F_MASK;
+		    setBitAtPosition (&list->optmask, _F_MASK, BIT_ON); 
 		  else
-		    list->optmask |= _SO_MASK;
+		    setBitAtPosition (&list->optmask, _SO_MASK, BIT_ON);
 		  w = DEF_ATMOST_NCOLS;
 		}
 	      else
@@ -835,9 +801,9 @@ int setargs (int argc, char* argv[], argslist *list)
 		  else
 		    {
 		      if (optch == 'f')
-			list->optmask |= _F_MASK;
+			setBitAtPosition (&list->optmask, _F_MASK, BIT_ON); 
 		      else
-			list->optmask |= _SO_MASK;
+			setBitAtPosition (&list->optmask, _SO_MASK, BIT_ON);
 		    }
 		  /* Otherwise you have to set 'w' appropriately. */
 		  /* If the given argument is less than -MAX_ATMOST_NCOLS */
@@ -863,7 +829,7 @@ int setargs (int argc, char* argv[], argslist *list)
 	    }
 	  break;
 	case 'X':
-	  if ( (i = strncmp (optarg, "1:", 2)) && (strncmp (optarg, "2:", 2)) )
+	  if ( (cmpRes = strncmp (optarg, "1:", 2)) && (strncmp (optarg, "2:", 2)) )
 	    {
 	      /*
 		None of the prefixes 1: and 2: has been used,
@@ -878,12 +844,12 @@ int setargs (int argc, char* argv[], argslist *list)
 	      else
 		{
 		  fselect (optarg, list->ghostmask2, mask_size);
-		  list->optmask |= _SX_MASK;
+		  setBitAtPosition (&list->optmask, _SX_MASK, BIT_ON);
 		}
 	    }
 	  else 
 	    {
-	      bitmask = i == 0 ? list->ghostmask1 : list->ghostmask2;
+	      bitmask = (cmpRes == 0 ? list->ghostmask1 : list->ghostmask2);
 	      if (fselect (optarg+2, bitmask, mask_size) <= 0)
 		{
 		  fprintf (stderr, _("%s: invalid argument after `-%c\' option\n"),
@@ -891,7 +857,7 @@ int setargs (int argc, char* argv[], argslist *list)
 		  return -1;
 		}
 	      else
-		list->optmask |= _SX_MASK; 
+		setBitAtPosition (&list->optmask, _SX_MASK, BIT_ON);
 	    }
 	  break;
 	case 'l':
@@ -902,6 +868,7 @@ int setargs (int argc, char* argv[], argslist *list)
 	      perror(0);
 	      return -1;
 	    }
+	  setBitAtPosition (&list->optmask, _L_MASK, BIT_ON);	  
 	  break;
 	case 'o':
 	  if (!freopen (optarg, "w", stdout))
@@ -911,9 +878,13 @@ int setargs (int argc, char* argv[], argslist *list)
 	      perror(0);
 	      return -1;
 	    }
+	  setBitAtPosition (&list->optmask, _O_MASK, BIT_ON);	  
+	  break;
+	case 1000:
+	  setBitAtPosition (&list->optmask, _RAW_MASK, BIT_ON);
 	  break;
 	case 'v':
-	  list->optmask |= _V_MASK;
+	  setBitAtPosition (&list->optmask, _V_MASK, BIT_ON);	  
 	  break;
 	default:
 	  /* 	  
@@ -929,18 +900,23 @@ int setargs (int argc, char* argv[], argslist *list)
   sdiff_half_width = MAX (0, MIN (off - 3, w - off)),
     sdiff_column2_offset = sdiff_half_width ? off : w;
 
-  if ( list->optmask & _SV_MASK )
+  if (getBitAtPosition (&list->optmask, _SV_MASK) == BIT_ON)
     list->output_mode = OUTMODE_VERBOSE;
-  if ( list->optmask & _B_MASK )
+  if (getBitAtPosition (&list->optmask, _B_MASK) == BIT_ON)
     list->output_mode = OUTMODE_BRIEF;
-  if (list->optmask & _B_MASK && list->optmask & _SV_MASK)
+  if (getBitAtPosition (&list->optmask, _B_MASK) == BIT_ON &&
+      getBitAtPosition (&list->optmask, _SV_MASK) == BIT_ON)
     list->output_mode = OUTMODE_COINCISE;
-  if ( list->optmask & _SO_MASK )
+  if (getBitAtPosition (&list->optmask, _SO_MASK) == BIT_ON)
     list->output_mode = OUTMODE_OVERVIEW;
-  if ( list->optmask & _Q_MASK )
+  if (getBitAtPosition (&list->optmask, _RAW_MASK) == BIT_ON)
+    list->output_mode = OUTMODE_RAW;  
+  if (getBitAtPosition (&list->optmask, _Q_MASK) == BIT_ON)
     list->output_mode = OUTMODE_QUIET;
 
-  if (!(list->optmask & (_H_MASK | _V_MASK)) && argc - optind != 2)
+  if (getBitAtPosition (&list->optmask, _H_MASK) == BIT_OFF &&
+      getBitAtPosition (&list->optmask, _V_MASK) == BIT_OFF &&
+      argc - optind != 2)
     {
       print_help (PACKAGE);
       return -1;
@@ -1009,7 +985,8 @@ int setargs (int argc, char* argv[], argslist *list)
     }
   else
     {
-      if( !(list->optmask & (_H_MASK | _V_MASK)) )
+      if(getBitAtPosition (&list->optmask, _H_MASK) == BIT_OFF &&
+	 getBitAtPosition (&list->optmask, _V_MASK) == BIT_OFF)
 	{
 	  list->file1 = (const char*) argv[optind];
 	  list->file2 = (const char*) argv[optind+1];

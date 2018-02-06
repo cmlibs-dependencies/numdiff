@@ -1,7 +1,7 @@
 /*
     Numdiff - compare putatively similar files, 
     ignoring small numeric differences
-    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  Ivano Primi  <ivprimi@libero.it>
+    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Ivano Primi  <ivprimi@libero.it>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -105,7 +105,7 @@ int scan_file (char** def_ifs, const Argslist* data)
   int errcode, omit_empty_lines;
 
   ifs = (!data->ifs) ? def_ifs : data->ifs;
-  omit_empty_lines = (data->optmask & ___X_MASK) ? 1 : 0;
+  omit_empty_lines =(getBitAtPosition (&data->optmask, ___X_MASK) ==BIT_ON);
   if (!data->file || !*data->file)
     fp = stdin;
   else
@@ -161,7 +161,7 @@ static
 void print_selversion (const char* progname)
 {
   printf ("%s %s\n", progname, VERSION);
-  printf ("Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  %s <ivprimi@libero.it>\n", 
+  printf ("Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  %s <ivprimi@libero.it>\n", 
 	  /* TRANSLATORS: This is a proper name.  See the gettext
 	     manual, section Names.
 	     Pronounciation is like "evaa-no pree-me".  */
@@ -257,7 +257,7 @@ int set_args (int argc, char* argv[], Argslist *list)
     We start by loading the default values
     for the user settable options.
   */
-  list->optmask = 0x0;
+  list->optmask = newBitVector (MAX_NDSELECT_OPTIONS);
   list->begin_line=1;
   list->end_line=0;
   list->step=1;
@@ -273,10 +273,10 @@ int set_args (int argc, char* argv[], Argslist *list)
       switch (optch)
 	{
 	case 'h':
-	  list->optmask |= ___H_MASK;
+	  setBitAtPosition (&list->optmask, ___H_MASK, BIT_ON);	  
 	  break;
 	case 'b':
-	  list->optmask |= ___B_MASK;
+	  setBitAtPosition (&list->optmask, ___B_MASK, BIT_ON);	  
 	  errno = 0;
 	  for (endptr = optarg; is_space (*endptr) != 0; endptr++);
 	  if (*endptr == '-' ||
@@ -290,7 +290,7 @@ int set_args (int argc, char* argv[], Argslist *list)
 	    }
 	  break;
 	case 'e':
-	  list->optmask |= ___E_MASK;
+	  setBitAtPosition (&list->optmask, ___E_MASK, BIT_ON);	  
 	  errno = 0;
 	  for (endptr = optarg; is_space (*endptr) != 0; endptr++);
 	  if (*endptr == '-' ||
@@ -304,7 +304,7 @@ int set_args (int argc, char* argv[], Argslist *list)
 	    }
 	  break;
 	case 's':
-	  list->optmask |= ___S_MASK;
+	  setBitAtPosition (&list->optmask, ___S_MASK, BIT_ON);	  
 	  errno = 0;
 	  for (endptr = optarg; is_space (*endptr) != 0; endptr++);
 	  if (*endptr == '-' ||
@@ -318,7 +318,7 @@ int set_args (int argc, char* argv[], Argslist *list)
 	    }
 	  break;
 	case 'F':
-	  list->optmask |= ___SF_MASK;
+	  setBitAtPosition (&list->optmask, ___SF_MASK, BIT_ON);	  
 	  errno = 0;
 	  for (endptr = optarg; is_space (*endptr) != 0; endptr++);
 	  if (*endptr == '-' ||
@@ -332,7 +332,7 @@ int set_args (int argc, char* argv[], Argslist *list)
 	    }
 	  break;
 	case 'L':
-	  list->optmask |= ___SL_MASK;
+	  setBitAtPosition (&list->optmask, ___SL_MASK, BIT_ON);	  
 	  errno = 0;
 	  for (endptr = optarg; is_space (*endptr) != 0; endptr++);
 	  if (*endptr == '-' ||
@@ -346,7 +346,7 @@ int set_args (int argc, char* argv[], Argslist *list)
 	    }
 	  break;
 	case 'I':
-	  list->optmask |= ___SI_MASK;
+	  setBitAtPosition (&list->optmask, ___SI_MASK, BIT_ON);
 	  errno = 0;
 	  for (endptr = optarg; is_space (*endptr) != 0; endptr++);
 	  if (*endptr == '-' ||
@@ -382,7 +382,7 @@ int set_args (int argc, char* argv[], Argslist *list)
             {
               remove_duplicates_from_string_vector (list->ifs);
               sort_string_vector (list->ifs); /* This is not strictly necessary */
-              list->optmask |= ___SS_MASK;
+	      setBitAtPosition (&list->optmask, ___SS_MASK, BIT_ON);
             }
           break;
         case 'D':
@@ -408,7 +408,7 @@ int set_args (int argc, char* argv[], Argslist *list)
             {
               remove_duplicates_from_string_vector (list->ifs);
               sort_string_vector (list->ifs);
-              list->optmask |= ___SD_MASK;
+	      setBitAtPosition (&list->optmask, ___SD_MASK, BIT_ON);      
             }
           break;
         case 'O':
@@ -424,10 +424,10 @@ int set_args (int argc, char* argv[], Argslist *list)
               return -1;
             }
           else
-            list->optmask |= ___SO_MASK;          
+	    setBitAtPosition (&list->optmask, ___SO_MASK, BIT_ON);
           break;
 	case 'x':
-	  list->optmask |= ___X_MASK;
+	  setBitAtPosition (&list->optmask, ___X_MASK, BIT_ON);	  
 	  break;
 	case 'l':
 	  if (!freopen (optarg, "w", stderr))
@@ -437,6 +437,7 @@ int set_args (int argc, char* argv[], Argslist *list)
 	      perror(0);
 	      return -1;
 	    }
+	  setBitAtPosition (&list->optmask, ___L_MASK, BIT_ON);	  
 	  break;
 	case 'o':
 	  if (!freopen (optarg, "w", stdout))
@@ -446,9 +447,10 @@ int set_args (int argc, char* argv[], Argslist *list)
 	      perror(0);
 	      return -1;
 	    }
+	  setBitAtPosition (&list->optmask, ___O_MASK, BIT_ON);	  
 	  break;
 	case 'v':
-	  list->optmask |= ___V_MASK;
+	  setBitAtPosition (&list->optmask, ___V_MASK, BIT_ON);	  
 	  break;
 	default:
 /*  	  fprintf (stderr,  */
@@ -456,14 +458,17 @@ int set_args (int argc, char* argv[], Argslist *list)
 	  return -1;
 	}
     }
-  if (!(list->optmask & (___H_MASK | ___V_MASK)) && argc - optind > 1)
+  if (getBitAtPosition (&list->optmask, ___H_MASK) == BIT_OFF &&
+      getBitAtPosition (&list->optmask, ___V_MASK) == BIT_OFF &&
+      argc - optind > 1)
     {
       print_selhelp (PACKAGE2);
       return -1;
     }
   else
     {
-      if( !(list->optmask & (___H_MASK | ___V_MASK)) )
+      if (getBitAtPosition (&list->optmask, ___H_MASK) == BIT_OFF &&
+	  getBitAtPosition (&list->optmask, ___V_MASK) == BIT_OFF)
 	list->file = (const char*) argv[optind];
       return 0;
     }
@@ -481,7 +486,8 @@ void clean_up_memory (void)
 int main (int argc, char** argv)
 {
   Argslist arg_list;
-
+  int pHelp, pVersion;
+  
   def_ifs = ssplit (DEF_IFS, I_DEF_SEP);
   if ((atexit(clean_up_memory)) || !def_ifs)
     {
@@ -496,16 +502,15 @@ int main (int argc, char** argv)
   textdomain (PACKAGE2);
   if ( set_args (argc, argv, &arg_list) != 0 )
     return -1;
-  else if ( (arg_list.optmask & (___H_MASK | ___V_MASK)) )
+  pHelp = getBitAtPosition (&arg_list.optmask, ___H_MASK) == BIT_ON;
+  pVersion = getBitAtPosition (&arg_list.optmask, ___V_MASK) == BIT_ON;
+  if ( (pHelp) || (pVersion) )
     {
-      if ((arg_list.optmask & ___V_MASK))
+      if ((pVersion))
       	print_selversion(PACKAGE2);
-      if ((arg_list.optmask & ___H_MASK))
+      if ((pHelp))
       	print_selhelp(PACKAGE2);
-      if (argc > 2)
-	return -1;
-      else
-	return 0;
+      return (argc > 2 ? -1 : 0);
     }
   else
     {

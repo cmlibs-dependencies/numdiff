@@ -1,7 +1,7 @@
 dnl
 dnl Autoconf configuration script for Numdiff - version 5.x  .
 dnl
-dnl Copyright 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  Ivano Primi  <ivprimi(at)libero(dot)it>.
+dnl Copyright 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Ivano Primi  <ivprimi(at)libero(dot)it>.
 dnl
 dnl Permission is granted to use, copy, modify, and redistribute this file as
 dnl needed.
@@ -22,7 +22,7 @@ dnl Initialization
 dnl --------------------------------------
 dnl
 
-AC_INIT(Numdiff, 5.8, <ivprimi at libero dot it>, numdiff)
+AC_INIT(Numdiff, 5.9, <ivprimi at libero dot it>, numdiff)
 AC_CONFIG_SRCDIR(numdiff.h)
 AC_CONFIG_HEADER(config.h)
 

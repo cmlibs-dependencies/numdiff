@@ -1,14 +1,14 @@
 # Italian messages for ndselect
-# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013  Ivano Primi <ivprimi@libero.it>
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Ivano Primi <ivprimi@libero.it>
 # This file is distributed under the same license as the Numdiff program.
-# Ivano Primi <ivprimi@libero.it>, 2013.
+# Ivano Primi <ivprimi@libero.it>, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: numdiff 5.8.1 (ndselect 5.8.1)\n"
+"Project-Id-Version: numdiff 5.9.0 (ndselect 5.9.0)\n"
 "Report-Msgid-Bugs-To: ivprimi@libero.it\n"
-"POT-Creation-Date: 2013-08-07 15:35+0200\n"
-"PO-Revision-Date: 2013-09-15 17:42+0200\n"
+"POT-Creation-Date: 2017-02-12 22:11+0100\n"
+"PO-Revision-Date: 2016-12-30 22:48+0100\n"
 "Last-Translator: Ivano Primi <ivprimi@libero.it>\n"
 "Language-Team: ITALIAN <ivprimi@libero.it>\n"
 "Language: Italian\n"
@@ -138,7 +138,7 @@ msgstr "Imposta al valore N il numero della prima linea da stampare"
 
 #: ndselect.c:191
 msgid "(The default behavior is to start with line number 1)"
-msgstr "(L'azione predefinita è di stampare dalla linea numero 1)"
+msgstr "(l'azione predefinita è di stampare dalla linea numero 1)"
 
 #: ndselect.c:193
 msgid "Set to N the number of the last line that can be printed"
@@ -146,7 +146,7 @@ msgstr "Imposta al valore N il numero dell'ultima linea stampabile"
 
 #: ndselect.c:194
 msgid "(The default behavior is to arrive till to the end of the file)"
-msgstr "(L'azione predefinita è di arrivare fino alla fine del file)"
+msgstr "(l'azione predefinita è di arrivare fino alla fine del file)"
 
 #: ndselect.c:196
 msgid "Set to N the increment to use when selecting the lines to print"
@@ -154,7 +154,7 @@ msgstr "Imposta al valore N il passo con cui selezionare le linee da stampare"
 
 #: ndselect.c:197 ndselect.c:206
 msgid "(The default value for the increment is 1)"
-msgstr "(Il valore predefinito per il passo è 1)"
+msgstr "(il valore predefinito per il passo è 1)"
 
 #: ndselect.c:199
 msgid "Set to N the number of the first field to print"
@@ -162,7 +162,7 @@ msgstr "Imposta al valore N il numero del primo campo da stampare"
 
 #: ndselect.c:200
 msgid "(The default behavior is to start with field number 1)"
-msgstr "(L'azione predefinita è di stampare dal campo numero 1)"
+msgstr "(l'azione predefinita è di stampare dal campo numero 1)"
 
 #: ndselect.c:202
 msgid "Set to N the number of the last field that can be printed"
@@ -170,7 +170,7 @@ msgstr "Imposta al valore N il numero dell'ultimo campo stampabile"
 
 #: ndselect.c:203
 msgid "(The default behavior is to arrive till to the end of every line)"
-msgstr "(L'azione predefinita è di arrivare fino alla fine di ogni linea)"
+msgstr "(l'azione predefinita è di arrivare fino alla fine di ogni linea)"
 
 #: ndselect.c:205
 msgid "Set to N the increment to use when selecting the fields to print"
@@ -186,7 +186,7 @@ msgstr ""
 
 #: ndselect.c:209 ndselect.c:212
 msgid "(The default set of delimiters is space, tab and newline)"
-msgstr "(L'insieme predefinito è spazio bianco, tabulazione e nuova linea)"
+msgstr "(l'insieme predefinito è spazio bianco, tabulazione e nuova linea)"
 
 #: ndselect.c:211
 msgid ""
@@ -209,7 +209,7 @@ msgid ""
 "(The default behavior consists in reusing\n"
 "     the delimiters found in the input lines)"
 msgstr ""
-"(L'azione predefinita consiste nel riutilizzare\n"
+"(l'azione predefinita consiste nel riutilizzare\n"
 "     i separatori trovati nelle linee di input)"
 
 #: ndselect.c:217
@@ -242,7 +242,7 @@ msgstr ""
 msgid "%s: invalid argument after `-%c' option\n"
 msgstr "%s: un argomento non valido segue l'opzione `-%c'\n"
 
-#: ndselect.c:371 ndselect.c:397 ndselect.c:423 ndselect.c:488
+#: ndselect.c:371 ndselect.c:397 ndselect.c:423 ndselect.c:494
 #, c-format
 msgid "%s: memory exhausted\n"
 msgstr "%s: memoria esaurita\n"
@@ -270,17 +270,17 @@ msgstr ""
 "  La lista di separatori di campo non può essere vuota\n"
 "  e deve sempre includere la stringa di nuova linea (\"\\n\")\n"
 
-#: ndselect.c:435 ndselect.c:444 ndselect.c:515
+#: ndselect.c:435 ndselect.c:445 ndselect.c:520
 #, c-format
 msgid "%s: cannot open file \"%s\":\n"
 msgstr "%s: impossibile aprire il file \"%s\":\n"
 
-#: ndselect.c:519
+#: ndselect.c:524
 #, c-format
 msgid "%s: cannot close file \"%s\":\n"
 msgstr "%s: è stato impossibile chiudere il file \"%s\":\n"
 
-#: ndselect.c:523
+#: ndselect.c:528
 #, c-format
 msgid ""
 "%s: Error occurred while reading from file \"%s\"\n"
