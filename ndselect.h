@@ -20,8 +20,8 @@
 #ifndef _NDSELECT_H_
 #define _NDSELECT_H_
 
-#include"config.h"
-#include"bitvector.h"
+#include "numdiff_config.h"
+#include "bitvector.h"
 
 /* Error codes */
 #define OPEN_ERROR     -1

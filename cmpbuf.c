@@ -17,9 +17,7 @@
    If not, write to the Free Software Foundation,
    59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include "numdiff_config.h"
 
 #include <errno.h>
 #include <limits.h>

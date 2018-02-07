@@ -19,9 +19,7 @@
 
 /* Written by Paul Eggert <eggert@twinsun.com>  */
 
-#if HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include "numdiff_config.h"
 
 #if HAVE_STDBOOL_H
 # include <stdbool.h>

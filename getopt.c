@@ -26,9 +26,7 @@
 # define _NO_PROTO
 #endif
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
+#include "numdiff_config.h"
 
 #include <stdio.h>
 
