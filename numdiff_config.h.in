@@ -2,22 +2,37 @@
 #ifndef NUMDIFF_CONFIG_H
 #define NUMDIFF_CONFIG_H
 
-#define STDC_HEADERS 1
+/* Version + Release number */
+#define VERSION "5.9.0"
+
+/* Number of decimal digits used in displaying the values */
+/* for absolute and relative error.                       */
+#define DEF_LIM     10
+
+/* Size of the input buffer (used to read from file) */
+#define BUFF_SIZE 1024
+
+/* Size of the mask of fields. FIELDMASK_SIZE * 8 gives the    */
+/* largest index of field which can be passed to the -F option */
+/* on the command line.                                        */
+#define FIELDMASK_SIZE 4096
+
+/* Line separator (output) */
+#define LINE_SEP  "----------------"
+
+/* End-of-File indicator */
+#define EOF_INDICATOR "<<*>>"
+
+/* Hyphenation character */
+#define HYPHEN '-'
+
+#cmakedefine01 HAVE_LONG_LONG
+#cmakedefine01 STDC_HEADERS
 #cmakedefine01 HAVE_UNISTD_H
 #cmakedefine01 HAVE_DECL_STRERROR_R
-/* STRERROR_R_CHAR_P */
-#cmakedefine01 HAVE_DECL_STRERROR_R
-#cmakedefine01 HAVE_STRERROR_R
-/* strerror_r */
-#cmakedefine01 HAVE_GETTIMEOFDAY
 #cmakedefine01 HAVE_CLOCK_GETTIME
-/* CLOCK_REALTIME */
 #cmakedefine01 HAVE_SETMODE_DOS
-#cmakedefine01 HAVE_LIBGMP
-/* DISABLE_GMP */
-#cmakedefine01 HAVE_LOCALECONV
-/* USE_GMP */
-#cmakedefine01 HAVE_STDBOOL_H
+#cmakedefine HAVE_LIBGMP
 #cmakedefine01 HAVE_FCNTL_H
 #cmakedefine01 HAVE_TIME_H
 #cmakedefine01 HAVE_SYS_FILE_H
@@ -33,11 +48,7 @@
 #cmakedefine01 HAVE_STRCHR
 #cmakedefine01 HAVE_MEMCHR
 #cmakedefine01 HAVE_LOCALE_H
-#cmakedefine01 HAVE_VFORK_H
-#cmakedefine01 HAVE_WORKING_VFORK
 #cmakedefine01 HAVE_ST_RDEV
-/* S_ISBLK */
-/* S_ISCHR */
 #cmakedefine01 HAVE_DECL_CLEARERR_UNLOCKED
 #cmakedefine01 HAVE_DECL_FEOF_UNLOCKED
 #cmakedefine01 HAVE_DECL_FERROR_UNLOCKED

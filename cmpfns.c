@@ -373,8 +373,8 @@ int cmp_lines (const char* line1, const char* line2,
 			{
 			  print_errors (abserr, relerr, 0);
 			}
-		      printf ("%.*s ==> ", l1, field1);
-		      printf ("%.*s\n", l2, field2); 
+		      printf ("%.*s ==> ", (unsigned int)l1, field1);
+		      printf ("%.*s\n", (unsigned int)l2, field2); 
 		    }
 		  lines_differ = 1;
 		}

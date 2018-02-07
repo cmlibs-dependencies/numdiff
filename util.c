@@ -38,8 +38,8 @@
 
 #include "numdiff.h"
 #include "linesplit.h"
-#include <error.h>
-#include <xalloc.h>
+#include "error.h"
+#include "xalloc.h"
 
 /* Use when a system call returns non-zero status.
    NAME should normally be the file name.  */

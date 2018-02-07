@@ -60,7 +60,7 @@ verify (hash_value_is_unsigned, ! TYPE_SIGNED (hash_value));
 
 #ifdef USE_GMP
 
-#include<gmp.h>
+#include <gmp.h>
 
 typedef mpf_t Real;
 typedef struct {

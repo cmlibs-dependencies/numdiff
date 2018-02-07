@@ -340,14 +340,6 @@ void *memchr ();
 # define bool unsigned char
 #endif
 
-#if HAVE_VFORK_H
-# include <vfork.h>
-#endif
-
-#if ! HAVE_WORKING_VFORK
-# define vfork fork
-#endif
-
 /* Type used for fast comparison of several bytes at a time.  */
 
 #ifndef word

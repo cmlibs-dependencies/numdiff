@@ -17,8 +17,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include"numdiff.h"
-#include<xalloc.h>
+#include "numdiff.h"
+#include "xalloc.h"
 
 /* Constants and default values */
 #define CHUNK_ALLOC  20480
