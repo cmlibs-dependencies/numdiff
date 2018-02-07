@@ -5,6 +5,7 @@ project(numdiff)
 set(SRC
     analyze.c
     arith.c
+    bitvector.c
     cmpbuf.c
     cmpfns.c
     exitfail.c
@@ -22,7 +23,26 @@ set(SRC
     xmalloc.c
 )
 
+set(HDRS
+    bitvector.h
+    cmpbuf.h
+    config.h
+    error.h
+    exitfail.h
+    getopt.h
+    getopt_int.h
+    gettext.h
+    linesplit.h
+    ndselect.h
+    number.h
+    numdiff.h
+    setmode.h
+    system.h
+    unlocked-io.h
+    xalloc.h
+)
+
 # other files:
 # errors.c error.c getopt.c new.c setmode.c number.c
 
-add_executable(numdiff ${SRC})
+add_executable(numdiff ${SRC} ${HDRS})
