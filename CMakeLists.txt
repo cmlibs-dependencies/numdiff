@@ -42,7 +42,15 @@ set(HDRS
     xalloc.h
 )
 
+# Run configuration tests.
+
+# Set config header with system environment. 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/numdiff_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/numdiff_config.h.in)
+
 # other files:
 # errors.c error.c getopt.c new.c setmode.c number.c
 
 add_executable(numdiff ${SRC} ${HDRS})
+
+target_include_directories(numdiff PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+
