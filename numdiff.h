@@ -1,7 +1,8 @@
 /*
-    Numdiff - compare putatively similar files, 
+    Numdiff - compare putatively similar files,
     ignoring small numeric differences
-    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017  Ivano Primi  <ivprimi@libero.it>
+    Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014,
+   2015, 2016, 2017  Ivano Primi  <ivprimi@libero.it>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,8 +21,8 @@
 #ifndef _NUMDIFF_H_
 #define _NUMDIFF_H_
 
-#include "system.h"
 #include "bitvector.h"
+#include "system.h"
 
 #if defined(HAVE_LIBGMP) && !defined(DISABLE_GMP)
 #define USE_GMP 1
@@ -29,34 +30,34 @@
 
 /* The type of a hash value.  */
 typedef size_t hash_value;
-verify (hash_value_is_unsigned, ! TYPE_SIGNED (hash_value));
+verify(hash_value_is_unsigned, !TYPE_SIGNED(hash_value));
 
 /* Rotate an unsigned value to the left.  */
-#define ROL(v, n) ((v) << (n) | (v) >> (sizeof (v) * CHAR_BIT - (n)))
+#define ROL(v, n) ((v) << (n) | (v) >> (sizeof(v) * CHAR_BIT - (n)))
 
 /* Given a hash value and a new character, return a new hash value.  */
 #ifdef _DEBUG_HASHING_
-#define HASH(h, c) (putc((c), stderr), (c) + ROL (h, 7))
+#define HASH(h, c) (putc((c), stderr), (c) + ROL(h, 7))
 #else
-#define HASH(h, c) ((c) + ROL (h, 7))
+#define HASH(h, c) ((c) + ROL(h, 7))
 #endif
 
 /* Error codes */
-#define OK             0
-#define LINE_INTERR    1
-#define EOF_REACHED    2
-#define READING_ERROR  3
-#define OUT_OF_MEMORY  4
+#define OK 0
+#define LINE_INTERR 1
+#define EOF_REACHED 2
+#define READING_ERROR 3
+#define OUT_OF_MEMORY 4
 /* *** */
-#define OPEN_FAILED    5
-#define WRONG_USAGE    6
+#define OPEN_FAILED 5
+#define WRONG_USAGE 6
 #define FILE_IS_BINARY 7
 
 /*
   Begin section -- Math types
 */
 
-#include"number.h"
+#include "number.h"
 
 #ifdef USE_GMP
 
@@ -80,7 +81,19 @@ typedef struct {
   End section -- Math types
 */
 
-#define THRLIST_OK              0
+#define IGNORELIST_OK 0
+#define IGNORELIST_ERROR -1
+
+struct ignore_list_node_def {
+  char *regular_expression;
+  struct ignore_list_node_def *next;
+};
+
+typedef struct ignore_list_node_def ignore_list_node;
+
+typedef ignore_list_node *ignorelist;
+
+#define THRLIST_OK 0
 #define THRLIST_INVALID_FORMAT -1
 #define THRLIST_INVALID_RANGES -2
 
@@ -90,18 +103,18 @@ typedef struct {
 */
 
 struct __thrlist_node {
-  Real threshold;               /* the threshold value */
+  Real threshold; /* the threshold value */
 
   /* BEG1-END1 and BEG2-END2 are the ranges of fields    */
   /* to which the specified THRESHOLD value applies.     */
   /* The two ranges must have the same length, but refer */
   /* to different files.                                 */
 
-  unsigned long beg1, end1;     
+  unsigned long beg1, end1;
   unsigned long beg2, end2;
 
   /* DOUBLE_RANGE_SPEC is a boolean value, which is 1 if */
-  /* BEG1-END1 and BEG2-END2  have been both explicitely */
+  /* BEG1-END1 and BEG2-END2  have been both explicitly  */
   /* set via the command line through a specification of */
   /* the form:                                           */
   /*                 BEG1-END1:BEG2-END2                 */
@@ -110,7 +123,7 @@ struct __thrlist_node {
   int double_range_spec;
 
   /* pointer to the next node in the list */
-  struct __thrlist_node *next;  
+  struct __thrlist_node *next;
 };
 
 typedef struct __thrlist_node thrlist_node;
@@ -126,31 +139,31 @@ struct numfmt {
   char pos_sign;     /* positive sign */
   char neg_sign;     /* negative sign */
   char ech;          /* prefix for decimal exponent  */
-  char iu;           /* symbol of the imaginary unit */ 
-}; 
+  char iu;           /* symbol of the imaginary unit */
+};
 /* A structure of this type is used to store  */
 /* information about the legal format for the */
 /* numbers in input.                          */
 
 /*
   This is the number of the fields in the 'numftm' structure
-  having "char" type. None of them can be a digit and 
+  having "char" type. None of them can be a digit and
   they must have all different values
   (see the code of the function valid_numfmt() in the file options.c).
 */
 #define NUMFMT_CHARS 6
 
 typedef struct {
-  unsigned char* ptr;
+  unsigned char *ptr;
   size_t len, size;
 } flg_array; /* A structure of this type is used to store the information
-		retrieved from the execution of a diff command */
+                retrieved from the execution of a diff command */
 
 typedef struct {
   unsigned long lineno1;
   unsigned long lineno2;
   unsigned long fieldno1;
-  unsigned long fieldno2;  
+  unsigned long fieldno2;
 } difference_location; /* A structure of this type is used
   to store the "location" of a difference between the compared files:
   (LINENO1,FIELDNO1) and (LINENO2, FIELDNO2) are the positions
@@ -164,31 +177,31 @@ typedef struct {
   /* OUTMODE_* (see below)                              */
   int output_mode;
 
-  /* This is a mask of bits specifying the fields of the first file 
+  /* This is a mask of bits specifying the fields of the first file
      which must be ignored. */
   unsigned char ghostmask1[FIELDMASK_SIZE];
 
-  /* This is a mask of bits specifying the fields of the second file 
+  /* This is a mask of bits specifying the fields of the second file
      which must be ignored. */
   unsigned char ghostmask2[FIELDMASK_SIZE];
 
-  /* This is a mask of bits specifying the fields in the 
-     first file for which partial blurring must be enabled during 
+  /* This is a mask of bits specifying the fields in the
+     first file for which partial blurring must be enabled during
      the filtering procedure. */
   unsigned char pblurmask1[FIELDMASK_SIZE];
 
   /* This is a mask of bits specifying the fields in the
-     second file for which partial blurring must be enabled during 
+     second file for which partial blurring must be enabled during
      the filtering procedure. */
   unsigned char pblurmask2[FIELDMASK_SIZE];
 
   /* This is a mask of bits specifying the fields in the
-     first file for which total blurring must be enabled during 
+     first file for which total blurring must be enabled during
      the filtering procedure. */
   unsigned char tblurmask1[FIELDMASK_SIZE];
 
   /* This is a mask of bits specifying the fields in the
-     second file for which total blurring must be enabled during 
+     second file for which total blurring must be enabled during
      the filtering procedure. */
   unsigned char tblurmask2[FIELDMASK_SIZE];
 
@@ -202,6 +215,8 @@ typedef struct {
 
   /* Tolerance thresholds for absolute and relative errors */
   thrlist maxabserr, maxrelerr;
+
+  ignorelist ignore;
 
   /* Flag > 0 --> If a numeric field in the first file is greater than the  */
   /*              corresponding numeric field in the second file, then the  */
@@ -228,64 +243,65 @@ typedef struct {
   /* Numeric conventions for file1 (.nf1) and file2 (.nf2) */
   struct numfmt nf1, nf2;
 
-} argslist ; /* A structure of this type is used to store the options */
-/* set by the user                                                    */ 
+} argslist; /* A structure of this type is used to store the options */
+/* set by the user                                                    */
 
 typedef struct {
   /* These variables are used to print statistics */
-  Real Labserr,  Crelerr,  Lrelerr,  Cabserr;
+  Real Labserr, Crelerr, Lrelerr, Cabserr;
   Real N1abserr, N1disperr, N2abserr, N2disperr;
 
   difference_location Labserr_location, Rabserr_location;
 
   int Nentries, Ndisperr;
-} statlist; 
+} statlist;
 
 enum {
-  _H_MASK=0,  /* -h option, used to recall help */
-  _A_MASK=1,  /* -a option, used to set tolerance for abs. error  */
-  _R_MASK=2,  /* -r option, used to set tolerance for rel. error  */
-  _2_MASK=3,  /* -2 option, used to enable the "strict" control */
-  _S_MASK=4,  /* -s option, used to explicitly set IFS  */
-  _B_MASK=5,  /* -b option, used to enable the "brief" mode */
-  _F_MASK=6,  /* -f option, used to enable the "filter-only" mode */
-  _Q_MASK=7,  /* -q option, used to enable "quiet" mode */
-  _X_MASK=8,  /* -# option, used to set the precision   */
-  _D_MASK=9,  /* -d option, used to set the decimal point */
-  _T_MASK=10, /* -t option, used to set the thousands separator */
-  _G_MASK=11, /* -g option, used to set the group length */
-  _P_MASK=12, /* -p option, used to set the character 'positive sign' */
-  _N_MASK=13, /* -n option, used to set the character 'negative sign' */
-  _E_MASK=14, /* -e option, used to set prefix for decimal exponent */
-  _I_MASK=15, /* -i option, used to set the symbol of the imaginary unit */
-  _L_MASK=16, /* -l option, to redirect the standard error on a file */
-  _O_MASK=17, /* -o option, to redirect the standard output on a file */
-  _Z_MASK=18, /* -z option, to activate the filter (normal mode) */
-  _SZ_MASK=19,/* -Z option, to activate the filter (alternative mode) */
-  _SX_MASK=20,/* -X option, used to select which fields in the
-		 lines of the files must be ignored */
-  _SP_MASK=21,/* -P option, used to ignore negative errors */
-  _SN_MASK=22,/* -N option, used to ignore positive errors */
-  _SU_MASK=23,/* -U option, used to enable the "dummy" mode */
-  _SE_MASK=24,/* -E option, used to enable the "essential" mode */
-  _SV_MASK=25,/* -V option, used to enable the "verbose" mode */
-  _SO_MASK=26,/* -O option, used to enable the "overview" mode */
-  _SS_MASK=27,/* -S option, used to print statistics */
-  _SI_MASK=28,/* -I option, used to ignore case while comparing 
-		 non numerical field */
-  _SH_MASK=29,/* -H option, by filtering assume large files and
-		 many scattered small changes */
-  _M_MASK=30, /* -m option, by filtering try hard to find a smaller 
-		 set of changes */
-  _ST_MASK=31,/* -T option, to expand tabs in spaces */
-  _SB_MASK=32,/* -B option, to treat both files as binary files */
-  _SD_MASK=33,/* -D option, used to set the field delimiters */
-  _SF_MASK=34,/* -F option, used to set the formula for computing
-		 the relative errors */
-  _C_MASK=35, /* -c option, used to set the currency name(symbol) */
-  _RAW_MASK=36, /* --raw option, to print the differences in raw format */
-  _V_MASK=37, /* -v option, used to show version number,
-		 Copyright and No-Warrany */
+  _H_MASK = 0,    /* -h option, used to recall help */
+  _A_MASK = 1,    /* -a option, used to set tolerance for abs. error  */
+  _R_MASK = 2,    /* -r option, used to set tolerance for rel. error  */
+  _2_MASK = 3,    /* -2 option, used to enable the "strict" control */
+  _S_MASK = 4,    /* -s option, used to explicitly set IFS  */
+  _B_MASK = 5,    /* -b option, used to enable the "brief" mode */
+  _F_MASK = 6,    /* -f option, used to enable the "filter-only" mode */
+  _Q_MASK = 7,    /* -q option, used to enable "quiet" mode */
+  _X_MASK = 8,    /* -# option, used to set the precision   */
+  _D_MASK = 9,    /* -d option, used to set the decimal point */
+  _T_MASK = 10,   /* -t option, used to set the thousands separator */
+  _G_MASK = 11,   /* -g option, used to set the group length */
+  _P_MASK = 12,   /* -p option, used to set the character 'positive sign' */
+  _N_MASK = 13,   /* -n option, used to set the character 'negative sign' */
+  _E_MASK = 14,   /* -e option, used to set prefix for decimal exponent */
+  _I_MASK = 15,   /* -i option, used to set the symbol of the imaginary unit */
+  _L_MASK = 16,   /* -l option, to redirect the standard error on a file */
+  _O_MASK = 17,   /* -o option, to redirect the standard output on a file */
+  _Z_MASK = 18,   /* -z option, to activate the filter (normal mode) */
+  _SZ_MASK = 19,  /* -Z option, to activate the filter (alternative mode) */
+  _SX_MASK = 20,  /* -X option, used to select which fields in the
+                     lines of the files must be ignored */
+  _SP_MASK = 21,  /* -P option, used to ignore negative errors */
+  _SN_MASK = 22,  /* -N option, used to ignore positive errors */
+  _SU_MASK = 23,  /* -U option, used to enable the "dummy" mode */
+  _SE_MASK = 24,  /* -E option, used to enable the "essential" mode */
+  _SV_MASK = 25,  /* -V option, used to enable the "verbose" mode */
+  _SO_MASK = 26,  /* -O option, used to enable the "overview" mode */
+  _SS_MASK = 27,  /* -S option, used to print statistics */
+  _SI_MASK = 28,  /* -I option, used to ignore case while comparing
+                     non numerical field */
+  _SH_MASK = 29,  /* -H option, by filtering assume large files and
+                     many scattered small changes */
+  _M_MASK = 30,   /* -m option, by filtering try hard to find a smaller
+                     set of changes */
+  _ST_MASK = 31,  /* -T option, to expand tabs in spaces */
+  _SB_MASK = 32,  /* -B option, to treat both files as binary files */
+  _SD_MASK = 33,  /* -D option, used to set the field delimiters */
+  _SF_MASK = 34,  /* -F option, used to set the formula for computing
+                     the relative errors */
+  _C_MASK = 35,   /* -c option, used to set the currency name(symbol) */
+  _RAW_MASK = 36, /* --raw option, to print the differences in raw format */
+  _V_MASK = 37,   /* -v option, used to show version number,
+             Copyright and No-Warranty */
+  _SR_MASK = 38,  /* -R option, used to set ignore regular expressions */
   MAX_NUMDIFF_OPTIONS = 100
 };
 
@@ -298,23 +314,19 @@ enum {
 /* and OUTMODE_OVERVIEW > OUTMODE_RAW.                  */
 
 enum {
-  OUTMODE_VERBOSE=    4,
-  OUTMODE_NORMAL=     3,
-  OUTMODE_COINCISE=   2,
-  OUTMODE_BRIEF=      1,
-  OUTMODE_QUIET=      0,
-  OUTMODE_OVERVIEW=  -1,
-  OUTMODE_RAW=       -2
+  OUTMODE_VERBOSE = 4,
+  OUTMODE_NORMAL = 3,
+  OUTMODE_COINCISE = 2,
+  OUTMODE_BRIEF = 1,
+  OUTMODE_QUIET = 0,
+  OUTMODE_OVERVIEW = -1,
+  OUTMODE_RAW = -2
 };
-  
+
 /* Methods to compute the relative differences */
 
-enum {
-  CLASSIC_FORMULA=        0,
-  WR_TO_FIRST_FILE=       1,
-  WR_TO_SECOND_FILE=      2
-};
-  
+enum { CLASSIC_FORMULA = 0, WR_TO_FIRST_FILE = 1, WR_TO_SECOND_FILE = 2 };
+
 #ifndef PACKAGE
 #define PACKAGE "numdiff"
 #endif
@@ -351,33 +363,32 @@ enum {
   .nf*.iu       (symbol of the imaginary unit)
   .iscale      (decimal digits of accuracy)
 */
-#define CURRENCY  ""
-#define DP        '.'
-#define THSEP     ','
-#define GROUPING   3
-#define POS_SIGN  '+'
-#define NEG_SIGN  '-'
-#define ECH       'e'
-#define IU        'i'
-#define ISCALE    35
-
+#define CURRENCY ""
+#define DP '.'
+#define THSEP ','
+#define GROUPING 3
+#define POS_SIGN '+'
+#define NEG_SIGN '-'
+#define ECH 'e'
+#define IU 'i'
+#define ISCALE 35
 
 /*
   Largest possible value for .iscale
 */
-#define MAX_ISCALE  180
+#define MAX_ISCALE 180
 
 /*
   Largest possible exponent accepted by Numdiff
   when a number is written in scientific notation
 */
-#define MAX_EXPN    +1073741824L
+#define MAX_EXPN +1073741824L
 
 /*
   Lowest possible exponent accepted by Numdiff
   when a number is written in scientific notation
 */
-#define MIN_EXPN    -1073741824L
+#define MIN_EXPN -1073741824L
 
 /*
   Macro to move ahead a pointer
@@ -388,63 +399,76 @@ enum {
   Character classification macros.
   The macro CTYPE_DOMAIN is defined in "system.h".
 */
-#define is_digit(c) ((unsigned int) (c) - '0' <= 9 ? 1 : 0)
-#define is_punct(c) (CTYPE_DOMAIN((unsigned char)(c)) && ispunct((unsigned char)(c)))
-#define is_print(c) (CTYPE_DOMAIN((unsigned char)(c)) && isgraph((unsigned char)(c)) && ((unsigned int) (c) - '0' > 9))
-#define is_space(c) (CTYPE_DOMAIN((unsigned char)(c)) && isspace((unsigned char)(c)))
+#define is_digit(c) ((unsigned int)(c) - '0' <= 9 ? 1 : 0)
+#define is_punct(c)                                                            \
+  (CTYPE_DOMAIN((unsigned char)(c)) && ispunct((unsigned char)(c)))
+#define is_print(c)                                                            \
+  (CTYPE_DOMAIN((unsigned char)(c)) && isgraph((unsigned char)(c)) &&          \
+   ((unsigned int)(c) - '0' > 9))
+#define is_space(c)                                                            \
+  (CTYPE_DOMAIN((unsigned char)(c)) && isspace((unsigned char)(c)))
 
 /*
   Mathematical functions
 */
 
-int      cmp (Real p, Real q);
-int      is0 (Real u);
-int      smart_cmp (const Complex* pz1, const Complex* pz2, int flag);
-void     printno (Real u, int m);
+int cmp(Real p, Real q);
+int is0(Real u);
+int smart_cmp(const Complex *pz1, const Complex *pz2, int flag);
+void printno(Real u, int m);
 
 extern Real Zero, Inf;
 
-void     init_mpa(int iscale);
+void init_mpa(int iscale);
 
-void     initR (Real* px);
-void     initC (Complex* pz);
+void initR(Real *px);
+void initC(Complex *pz);
 
-void copyR (Real* dst, Real src);
-void copyC (Complex* dst, Complex src);
+void copyR(Real *dst, Real src);
+void copyC(Complex *dst, Complex src);
 
 #ifdef _MPA_DEBUG
-void     debug_printno (Real u, int m);
+void debug_printno(Real u, int m);
 #endif /* _MPA_DEBUG */
 
-void     str2R (const char *q, char **endptr, int iscale,
-		const struct numfmt* pnf, Real* pr);
-void     str2C (const char *q, char **endptr, int iscale,
-		const struct numfmt* pnf, Complex* pc);
+void str2R(const char *q, char **endptr, int iscale, const struct numfmt *pnf,
+           Real *pr);
+void str2C(const char *q, char **endptr, int iscale, const struct numfmt *pnf,
+           Complex *pc);
 
-void     add (Real s, Real t, Real* q, int iscale);
-void     square (Real s, Real* q, int iscale);
-void     divide (Real s, Real t, Real* q, int iscale);
-void     divide_by_int (Real* q, int d, int iscale);
-void     square_root (Real* q, int iscale);
+void add(Real s, Real t, Real *q, int iscale);
+void square(Real s, Real *q, int iscale);
+void divide(Real s, Real t, Real *q, int iscale);
+void divide_by_int(Real *q, int d, int iscale);
+void square_root(Real *q, int iscale);
 
-void     Cabs (Complex z, Real* pm, int iscale);
-void     Csub (Complex z1, Complex z2, Complex* pw, int iscale);
+void Cabs(Complex z, Real *pm, int iscale);
+void Csub(Complex z1, Complex z2, Complex *pw, int iscale);
 
-void     delR (Real* px);
-void     delC (Complex* pz);
+void delR(Real *px);
+void delC(Complex *pz);
 
-void     end_mpa(void);
+void end_mpa(void);
 
 /*
   Functions used to manipulate lists of threshold specifications (see thrlist.c)
 */
 
-thrlist thrlist_new (void);
-int thrlist_add (thrlist *plist, const char* def);
-int thrlist_cmp (Real r, thrlist list, unsigned long fieldno1, unsigned long fieldno2);
-void thrlist_dispose (thrlist *plist);
+thrlist thrlist_new(void);
+int thrlist_add(thrlist *plist, const char *def);
+int thrlist_cmp(Real r, thrlist list, unsigned long fieldno1,
+                unsigned long fieldno2);
+void thrlist_dispose(thrlist *plist);
 
-
+/*
+  Functions used to manipulate lists of ignore regular expressions (see
+  ignorelist.c)
+*/
+
+ignorelist ignorelist_new(void);
+int ignorelist_add(ignorelist *plist, const char *def);
+void ignorelist_dispose(ignorelist *plist);
+
 /* Shared definitions coming from GNU DIFF
 
    Copyright (C) 1988, 1989, 1991, 1992, 1993, 1994, 1995, 1998, 2001,
@@ -479,8 +503,7 @@ void thrlist_dispose (thrlist *plist);
 #define MAX_ATMOST_NCOLS 512
 
 /* What kind of changes a hunk contains.  */
-enum changes
-{
+enum changes {
   /* No changes: lines common to both files.  */
   UNCHANGED,
 
@@ -497,14 +520,13 @@ enum changes
 /* Variables for command line options */
 
 #ifndef GDIFF_OPTIONS
-# define XTERN extern
+#define XTERN extern
 #else
-# define XTERN
+#define XTERN
 #endif
 
 /* The significance of white space during comparisons.  */
-XTERN enum
-{
+XTERN enum {
   /* All white space is significant (the default).  */
   IGNORE_NO_WHITE_SPACE,
 
@@ -550,14 +572,13 @@ XTERN char *program_name;
    If DELETED is 0 then LINE0 is the number of the line before
    which the insertion was done; vice versa for INSERTED and LINE1.  */
 
-struct change
-{
-  struct change *link;		/* Previous or next edit command  */
-  lin inserted;			/* # lines of file 1 changed here.  */
-  lin deleted;			/* # lines of file 0 changed here.  */
-  lin line0;			/* Line number of 1st deleted line.  */
-  lin line1;			/* Line number of 1st inserted line.  */
-  bool ignore;			/* Flag used in context.c.  */
+struct change {
+  struct change *link; /* Previous or next edit command  */
+  lin inserted;        /* # lines of file 1 changed here.  */
+  lin deleted;         /* # lines of file 0 changed here.  */
+  lin line0;           /* Line number of 1st deleted line.  */
+  lin line1;           /* Line number of 1st inserted line.  */
+  bool ignore;         /* Flag used in context.c.  */
 };
 
 /* Structures that describe the input files.  */
@@ -565,74 +586,74 @@ struct change
 /* Data on one input file being compared.  */
 
 struct file_data {
-    int             desc;	/* File descriptor  */
-    char const      *name;	/* File name  */
-    struct stat     stat;	/* File status */
+  int desc;         /* File descriptor  */
+  char const *name; /* File name  */
+  struct stat stat; /* File status */
 
-    /* Buffer in which text of file is read.  */
-    word *buffer;
+  /* Buffer in which text of file is read.  */
+  word *buffer;
 
-    /* Allocated size of buffer, in bytes.  Always a multiple of
-       sizeof *buffer.  */
-    size_t bufsize;
+  /* Allocated size of buffer, in bytes.  Always a multiple of
+     sizeof *buffer.  */
+  size_t bufsize;
 
-    /* Number of valid bytes now in the buffer.  */
-    size_t buffered;
+  /* Number of valid bytes now in the buffer.  */
+  size_t buffered;
 
-    /* Array of pointers to lines in the file.  */
-    char const **linbuf;
+  /* Array of pointers to lines in the file.  */
+  char const **linbuf;
 
-    /* linbuf_base <= buffered_lines <= valid_lines <= alloc_lines.
-       linebuf[linbuf_base ... buffered_lines - 1] are possibly differing.
-       linebuf[linbuf_base ... valid_lines - 1] contain valid data.
-       linebuf[linbuf_base ... alloc_lines - 1] are allocated.  */
-    lin linbuf_base, buffered_lines, valid_lines, alloc_lines;
+  /* linbuf_base <= buffered_lines <= valid_lines <= alloc_lines.
+     linebuf[linbuf_base ... buffered_lines - 1] are possibly differing.
+     linebuf[linbuf_base ... valid_lines - 1] contain valid data.
+     linebuf[linbuf_base ... alloc_lines - 1] are allocated.  */
+  lin linbuf_base, buffered_lines, valid_lines, alloc_lines;
 
-    /* Pointer to end of prefix of this file to ignore when hashing.  */
-    char const *prefix_end;
+  /* Pointer to end of prefix of this file to ignore when hashing.  */
+  char const *prefix_end;
 
-    /* Count of lines in the prefix.
-       There are this many lines in the file before linbuf[0].  */
-    lin prefix_lines;
+  /* Count of lines in the prefix.
+     There are this many lines in the file before linbuf[0].  */
+  lin prefix_lines;
 
-    /* Pointer to start of suffix of this file to ignore when hashing.  */
-    char const *suffix_begin;
+  /* Pointer to start of suffix of this file to ignore when hashing.  */
+  char const *suffix_begin;
 
-    /* Vector, indexed by line number, containing an equivalence code for
-       each line.  It is this vector that is actually compared with that
-       of another file to generate differences.  */
-    lin *equivs;
+  /* Vector, indexed by line number, containing an equivalence code for
+     each line.  It is this vector that is actually compared with that
+     of another file to generate differences.  */
+  lin *equivs;
 
-    /* Vector, like the previous one except that
-       the elements for discarded lines have been squeezed out.  */
-    lin *undiscarded;
+  /* Vector, like the previous one except that
+     the elements for discarded lines have been squeezed out.  */
+  lin *undiscarded;
 
-    /* Vector mapping virtual line numbers (not counting discarded lines)
-       to real ones (counting those lines).  Both are origin-0.  */
-    lin *realindexes;
+  /* Vector mapping virtual line numbers (not counting discarded lines)
+     to real ones (counting those lines).  Both are origin-0.  */
+  lin *realindexes;
 
-    /* Total number of nondiscarded lines.  */
-    lin nondiscarded_lines;
+  /* Total number of nondiscarded lines.  */
+  lin nondiscarded_lines;
 
-    /* Vector, indexed by real origin-0 line number,
-       containing TRUE for a line that is an insertion or a deletion.
-       The results of comparison are stored here.  */
-    bool *changed;
+  /* Vector, indexed by real origin-0 line number,
+     containing TRUE for a line that is an insertion or a deletion.
+     The results of comparison are stored here.  */
+  bool *changed;
 
-    /* 1 if file ends in a line with no final newline.  */
-    bool missing_newline;
+  /* 1 if file ends in a line with no final newline.  */
+  bool missing_newline;
 
-    /* 1 if at end of file.  */
-    bool eof;
+  /* 1 if at end of file.  */
+  bool eof;
 
-    /* 1 more than the maximum equivalence value used for this or its
-       sibling file.  */
-    lin equiv_max;
+  /* 1 more than the maximum equivalence value used for this or its
+     sibling file.  */
+  lin equiv_max;
 };
 
 /* The file buffer, considered as an array of bytes rather than
    as an array of words.  */
-#define FILE_BUFFER(f) ((char *) (f)->buffer)
+#define FILE_BUFFER(f) ((char *)(f)->buffer)
 
 /* Describe the two files currently being compared.  */
 
@@ -645,46 +666,47 @@ XTERN struct file_data files[2];
 /* Declare various functions.  */
 
 /* analyze.c */
-int diff_2_files (struct file_data[], const argslist*);
+int diff_2_files(struct file_data[], const argslist *);
 
 /* inout.c */
-bool read_files (struct file_data[], const argslist*);
+bool read_files(struct file_data[], const argslist *);
 
 /* numutil.c */
-char* acxnum (const char *str, const struct numfmt* pnf);
-int compare_numeric_strings (const char *str1, const struct numfmt* pnf1,
-			     const char *str2, const struct numfmt* pnf2);
-char* hcxnum (const char *str, const struct numfmt* pnf, hash_value *ph);
+char *acxnum(const char *str, const struct numfmt *pnf);
+int compare_numeric_strings(const char *str1, const struct numfmt *pnf1,
+                            const char *str2, const struct numfmt *pnf2);
+char *hcxnum(const char *str, const struct numfmt *pnf, hash_value *ph);
 #ifdef USE_GMP
-int mpf_a2num (Real* pr, const char *q, char** endptr, const struct numfmt* pnf);
+int mpf_a2num(Real *pr, const char *q, char **endptr, const struct numfmt *pnf);
 #endif /* USE_GMP */
 
 /* side.c */
-void print_sdiff_script (struct change *);
-void print_1overview_line (const char *left, int are_different, const char *right);
+void print_sdiff_script(struct change *);
+void print_1overview_line(const char *left, int are_different,
+                          const char *right);
 
 /* util.c */
-bool lines_differ (char const *, char const *, int, int, const argslist*);
-void *zalloc (size_t);
+bool lines_differ(char const *, char const *, int, int, const argslist *);
+void *zalloc(size_t);
 
-#define stralloc(length) zalloc ((length)+1)
+#define stralloc(length) zalloc((length) + 1)
 
-enum changes analyze_hunk (struct change *, lin *, lin *, lin *, lin *);
+enum changes analyze_hunk(struct change *, lin *, lin *, lin *, lin *);
 #ifdef _DEBUG_SCRIPT_
-void debug_script (struct change *);
+void debug_script(struct change *);
 #endif
-void perror_with_name (char const *);
-void pfatal_with_name (char const *) __attribute__((noreturn));
-void print_script (struct change *, void (*) (struct change *));
+void perror_with_name(char const *);
+void pfatal_with_name(char const *) __attribute__((noreturn));
+void print_script(struct change *, void (*)(struct change *));
 
 /* flags.c */
 /* This functions were added by Ivano Primi, 14-02-08 */
 
-int init_flags (void);
-int print_flags (FILE* fp);
-flg_array copy_of_intflagtab (void);
-void erase_flags (void);
-void notedown_sdiff_script (struct change *script);
+int init_flags(void);
+int print_flags(FILE *fp);
+flg_array copy_of_intflagtab(void);
+void erase_flags(void);
+void notedown_sdiff_script(struct change *script);
 
 /* End Section "Shared definitions coming from GNU DIFF" */
 

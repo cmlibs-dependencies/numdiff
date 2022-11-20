@@ -17,5 +17,7 @@
    If not, write to the Free Software Foundation,
    59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
+#include <stddef.h>
+
 size_t block_read (int, char *, size_t);
 size_t buffer_lcm (size_t, size_t, size_t);

@@ -11,6 +11,7 @@ set(SRC
     error.c
     exitfail.c
     flags.c
+    ignorelist.c
     inout.c
     io.c
     linesplit.c
