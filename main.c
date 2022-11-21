@@ -515,6 +515,15 @@ int main(int argc, char *argv[]) {
         close_files();
         return EXIT_TROUBLE;
       }
+      if (!qm) {
+          ignorelist ilist = list.ignore;
+          while (ilist) {
+              if (ilist->regular_expression) {
+                  printf(_("regex: %s\n"), ilist->regular_expression);
+              }
+              ilist = ilist->next;
+          }
+      }
       test = cmp_files(fp1, fp2, &list, &statres);
       if (getBitAtPosition(&list.optmask, _SS_MASK) == BIT_ON && test <= 1)
         print_statistics(&list, &statres);
